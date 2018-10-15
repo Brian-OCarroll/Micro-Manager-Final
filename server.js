@@ -2,7 +2,7 @@ var express = require('express');
 
 var app = express();
 
-
+const {router: usersRouter} = require('./routes/users')
 
 //CORS
 app.use(function (req, res, next) {
@@ -16,6 +16,8 @@ app.use(function (req, res, next) {
   });
   
 app.use(express.static("public"));
+
+app.use('/users/', usersRouter);
  
   if (require.main === module) {
     app.listen(process.env.PORT || 8080, function() {
