@@ -3,31 +3,12 @@
 const mongoose = require("mongoose");
 
 const { Users } = require("../users/models");
-
+//Users schema/model Users called
 const listSchema = mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
   name: { type: String, required: true },
   symbol: {type: String, required: true}
 });
-
-// listSchema.pre("findOne", function(next) {
-//   this.populate("creator");
-//   next();
-// });
-
-// listSchema.pre("find", function(next) {
-//   this.populate("creator");
-//   next();
-// });
-
-// listSchema.pre("save", function(next) {
-//   User.findById(this.creator).exec((error, user) => {
-//     user.cardlists.push(this);
-//     user.save(() => {
-//       next();
-//     });
-//   });
-// });
 
 listSchema.virtual("user_id").get(function() {
   return `${this.user._id}`.trim();
@@ -41,7 +22,8 @@ listSchema.methods.serialize = function() {
     symbol: this.symbol
   };
 };
+//portfolio collection in mlab database
 
-const cardList = mongoose.model("cardlist", listSchema);
+const portfolio = mongoose.model("portfolio", listSchema);
 
-module.exports = { cardList };
+module.exports = { portfolio };
