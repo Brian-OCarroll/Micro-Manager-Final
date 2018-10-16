@@ -16,14 +16,16 @@ const userSchema = mongoose.Schema({
         required: true
     },
     //change before production to different ref
-    portfolio: [{ type: mongoose.Schema.Types.ObjectId, ref: "cardlist" }]
+    //change complete
+    //still confused about ref though
+    portfolio: [{ type: mongoose.Schema.Types.ObjectId, ref: "portfolio" }]
 });
 //display user account info, doesn't store password
 userSchema.methods.serialize = function() {
     return {
         username: this.username || '',
         id: this._id,
-        cardlists:this.cardlists
+        portfolio:this.portfolio
     };
 };
 
@@ -34,7 +36,7 @@ userSchema.methods.validatePassword = function(password) {
 userSchema.statics.hashPassword = function(password) {
     return bcrypt.hash(password, 10);
 };
-//users collection in db
-const Users = mongoose.model('users', userSchema);
+//Users collection in db
+const Users = mongoose.model('Users', userSchema);
 
 module.exports = {Users};
