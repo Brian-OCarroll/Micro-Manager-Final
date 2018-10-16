@@ -133,8 +133,8 @@ router.post('/', jsonParser, checkPostReq, (req, res) => {
 });
 //change before release
 router.get("/:id", jwtAuth, (req, res) => {
-  User.findById(req.params.id)
-    .populate("cardlists")
+  Users.findById(req.params.id)
+    .populate("portfolio")
     .exec(function(err, user) {
       if (err) {
         console.error(err);
