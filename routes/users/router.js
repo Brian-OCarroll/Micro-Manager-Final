@@ -131,5 +131,16 @@ router.post('/', jsonParser, checkPostReq, (req, res) => {
       res.status(500).render('error',errorHbs);
     });
 });
-
+//change before release
+router.get("/:id", jwtAuth, (req, res) => {
+  User.findById(req.params.id)
+    .populate("cardlists")
+    .exec(function(err, user) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+      }
+      res.status(200).json(user.serialize());
+    });
+});
 module.exports = {router};

@@ -14,13 +14,16 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    //change before production to different ref
+    portfolio: [{ type: mongoose.Schema.Types.ObjectId, ref: "cardlist" }]
 });
 //display user account info, doesn't store password
 userSchema.methods.serialize = function() {
     return {
         username: this.username || '',
-        id: this._id
+        id: this._id,
+        cardlists:this.cardlists
     };
 };
 
