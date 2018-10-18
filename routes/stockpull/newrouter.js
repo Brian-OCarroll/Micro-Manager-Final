@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const request=require('request-promise');
 const bodyParser=require('body-parser');
-var moment = require('moment');
+// var moment = require('moment');
 
 //STORED IN HEROKU
 const { ALPHA_KEY } = require('../../config');
