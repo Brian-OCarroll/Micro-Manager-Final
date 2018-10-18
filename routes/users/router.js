@@ -2,11 +2,15 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
+const passport = require("passport");
 
 const {Users} = require('./models');
 
 const router = express.Router();
+
+const jsonParser = bodyParser.json();
+
+const jwtAuth = passport.authenticate("jwt", { session: false });
 
 function checkPostReq(req,res,next){
   // check requiredFields exist. (user's registration form may contain several fields, and only certain fields are definitely required)
@@ -22,7 +26,7 @@ function checkPostReq(req,res,next){
   }
 
   // check certain fields have the right type (in front-end, ensure to have password type as string instead of number)
-  const stringFields = ['username', 'password', 'firstName', 'lastName'];
+  const stringFields = ['username', 'password'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -123,12 +127,7 @@ router.post('/', jsonParser, checkPostReq, (req, res) => {
       if (err.reason === 'ValidationError') {
         return res.status(err.code).json(err);
       }
-      let errorHbs={
-        statusCode:500,
-        errorMessage:'Internal Server Error',
-        layout:false
-      };
-      res.status(500).render('error',errorHbs);
+      res.status(500).json({ code: 500, message: "Internal server error" });
     });
 });
 //change before release
@@ -143,4 +142,11 @@ router.get("/:id", jwtAuth, (req, res) => {
       res.status(200).json(user.serialize());
     });
 });
+//Remove before production
+router.get("/", (req, res) => {
+  return Users.find()
+    .then(users => res.json(users.map(user => user.serialize())))
+    .catch(err => res.status(500).json({ message: "Internal server error" }));
+});
+
 module.exports = {router};
