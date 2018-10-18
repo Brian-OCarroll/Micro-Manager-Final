@@ -12,8 +12,8 @@ $(document).ready(function () {
   
   //listen for signup
   
-  $('#signup').on('submit', function(e) {
-    e.stopPropogation();
+  $('#signup').on('click', function(e) {
+    // e.stopPropogation();
     e.preventDefault();
     //add class
     let username = $('[name="username"]').val();
@@ -30,8 +30,8 @@ $(document).ready(function () {
       contentType: "application/json; charset=utf-8",
       dataType:'json',
       data:JSON.stringify({
-        "username":username,
-        "password":password
+        username,
+        password
       })
     };
   
@@ -47,17 +47,17 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         data: JSON.stringify({
-          "username": data.username,
-          "password": password
+          username,
+          password
         })
       };
   
       $.ajax(options2)
       .then(function(loginData){
         //what the hell this do????????
-        sessionStorage.setItem('userBooks', JSON.stringify(dataFrLogin));
-        //replace with html for main page
-        window.location.replace("./html/mainpage.html");
+        localStorage.setItem("token", token.authToken);
+        localStorage.setItem("user_id", token.user);
+        window.location.replace("./stocksearch.html");
       })
       .catch(err => {
         if (err.responseJSON.message) {
@@ -85,8 +85,8 @@ $(document).ready(function () {
   
   
   //listen for login
-  $('#login').on('submit', function(e) {
-    e.stopPropogation();
+  $('#login').on('click', function(e) {
+    // e.stopPropogation();
     e.preventDefault();
     let username = $('[name="loguser"]').val();
     let password = $('[name="logpass"]').val();
@@ -106,11 +106,10 @@ $(document).ready(function () {
     .then(function(data) {
       //console.log('user login succeeded');
   
-      //don't know what does yet?????????
-      sessionStorage.setItem('userBooks', JSON.stringify(data));
-      //reroute to main page 
-      //change route location
-      window.location.replace("./html/mainpage.html");
+      console.log(token.authToken);
+      localStorage.setItem("token", token.authToken);
+      localStorage.setItem("user_id", token.user);
+      window.location.replace("./stocksearch.html");
     })
     .catch(err=>{
           console.log(err);
