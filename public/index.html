@@ -2,49 +2,55 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Micro Manager</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sign-Up Page</title>
+  <link rel="stylesheet" href="./index.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
 </head>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> -->
-<link rel="stylesheet" href="./index.css">
 
 <body>
-    <header role="banner"></header>
-    <main role="main">
-        <form action="/stockpull" method="GET" class="stock-search-form">
-            <label for="stockSearchBox">Search Here</label>
-            <input type="text" id="stockSearchBox" class="search-query" placeholder="GOOGL" name='query'>
-            <button type="submit" class="form-submit-button">Search</button>
-        </form>
-        <section class="searchSummary">
+  <div class="forms">
+    <ul class="tab-group">
+      <li class="tab active">
+        <a href="#login">Log In</a>
+      </li>
+      <li class="tab">
+        <a href="#signup">Sign Up</a>
+      </li>
+    </ul>
 
-        </section>
-        <section class="graph">
-            <form class="graph-buttons">
-                <button class="time-button" type="button">1W</button>
-                <button class="time-button" type="button">1M</button>
-                <button class="time-button" type="button">3M</button>
-                <button class="time-button" type="button">1Y</button>
-                <button class="time-button" type="button">5Y</button>
-            </form>
-            <canvas class="chart-js col-12"></canvas>
-        </section>
-        <script src='./index.js'></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-            crossorigin="anonymous"></script>
-        <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js'></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <form id="signup" action="" method="post">
+      <fieldset>
+        <legend>Sign-Up</legend>
+        <h1 class="title">Create your account</h1>
+        <h2 class="subtitle">Create a Portfolio</h2>
+        <br>
+        <div class="input-field">
+          <input type="text" name="username" placeholder="Username" aria-label="Username" required/>
+          <input type="password" name="pass" placeholder="Password" aria-label="Password" required/>
+          <input type="password" name="checkpass" placeholder="Confirm Password" aria-label="Confirm Password" required/>
+          <button id="Signup" type="submit">Submit</button>
+        </div>
+      </fieldset>
+    </form>
+    <form id="login" action="" method="post">
+      <fieldset>
+        <legend>Login</legend>
+        <h1 class="title">Welcome Back</h1>
+        <h2 class="subtitle">Manage Your Portfolio</h2>
+        <br>
+        <div class="input-field">
+          <input type="text" name="loguser" placeholder="Username" aria-label="Username" required/>
+          <input type="password" name="logpass" placeholder="Password" aria-label="Password" required />
+          <button id="Login" type="submit">Submit</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <script src="./index.js"></script>
 </body>
 
 </html>
