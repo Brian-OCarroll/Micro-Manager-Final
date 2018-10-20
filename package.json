@@ -2,35 +2,38 @@
   "name": "capstone2final",
   "version": "1.0.0",
   "engines": {
-    "node": "8.10.0"
+    "node": "9.11.1",
+    "npm": "6.4.1"
   },
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --exit"
+    "test": "mocha",
+    "start": "node server.js"
   },
   "author": "bocarroll36@gmail.com",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.3",
-    "dotenv": "^6.1.0",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "express-handlebars": "^3.0.0",
-    "jsonwebtoken": "^8.2.1",
-    "mongoose": "^5.1.1",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.5",
     "morgan": "^1.9.0",
-    "npm": "^6.0.1",
+    "normalize.css": "^8.0.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "request": "^2.86.0",
-    "request-promise": "^4.2.2"
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "faker": "^4.1.0",
-    "mocha": "^5.1.1"
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3"
   }
 }
