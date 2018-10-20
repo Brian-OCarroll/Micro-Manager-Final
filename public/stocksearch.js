@@ -77,6 +77,7 @@ $('body').on('click', '.form-submit-button', function (e) {
             //the main object with all dates by day
             // let fullData = data[stockDay.json];
             let fullData = data["Time Series (Daily)"];
+            console.log(fullData);
             let arrayData = [];
             // adds a key value pair for the date, with the date of the stock quote, 
             //and then deletes the key 'Time Series (Daily)'
@@ -236,88 +237,3 @@ $('.searchSummary').on('click', '.save-portfolio-button', function(e) {
     
 });
 
-
-// /*********** display stock graph details in lightbox *************/
-// // when user clicks on the stock card, show details on a lightbox
-// $('body').on('click','.card',function(e){
-// 	e.stopPropagation();
-// 	let symbol=$(e.target).closest('.card').attr('data-symbol');
-// 	const options={
-// 		url:'/stockpull/graph',
-// 		type:'GET',
-// 		cache:true,
-//         data: {
-//             symbol: symbol,
-//         },
-// 		dataType:'json'
-// 	};
-    // $.ajax(options)
-    // .then(function(data) {
-    //             stockChartWeekly = new Chart(
-    //                 $(".chart-js"),
-    //                 {"type":"line",
-    //                     "data":{"labels":data[0].date, //array of labels
-    //                         "datasets":[
-    //                             {"label":"Symbol",
-    //                                 "data":data[0].data, //array of data
-    //                                 "fill":false,
-    //                                 "borderColor":"rgb(255, 255, 255)",
-    //                                 "lineTension":0.1}
-    //                                 ]},
-    //                     "options":{
-    //                         elements:{
-    //                           point:{
-    //                               radius: 0
-    //                           }
-    //                         },
-    //                         legend:{
-    //                             display: false
-    //                         },
-    //                         scales:{
-    //                             yAxes:[{
-    //                                ticks:{
-    //                                    fontColor:"white"
-    //                                }
-    //                             }],
-    //                             xAxes:[{
-    //                                 type: 'time',
-    //                                 distribution: 'series',
-    //                                 bounds: 'data',
-    //                                 ticks: {
-    //                                     fontColor:"white",
-    //                                     source: 'data',
-    //                                     display: true //set to false to remove x axis labels
-    //                                 }
-    //                             }]
-    //                         }}
-    //                 });
-
-    // })
-// 	.then(function(data){
-// 		let hbsObj=data;
-// 		let userLoggedIn=Cookies.get('username')===undefined ? false:Cookies.get('username');
-// 		hbsObj.userLoggedIn=userLoggedIn;
-// 		let userBooks=JSON.parse(sessionStorage.getItem('userBooks'));
-// 		hbsObj.userBooks=userBooks;
-// 		hbsObj.instructions.map(instruction=>{
-// 			if(instruction.name===''){
-// 				instruction.name=false;
-// 			}
-// 		});
-// 		//console.log(hbsObj);
-// 		let html=lightboxTemplate(hbsObj);
-// 		$('#lightbox-template-container').html(html);
-// 	})
-// 	.then(()=>{
-// 		$.fancybox.open({
-// 			src:'#lightbox-template-container',
-// 			type:'inline',
-// 			opts:{
-// 				afterShow:function(instance,current){
-// 					//console.info('show recipe details in modal!')
-// 				}
-// 			}
-// 		});
-// 	})
-// 	.catch(err=>{console.log(err)});
-// });

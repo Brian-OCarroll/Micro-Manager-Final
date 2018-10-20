@@ -57,8 +57,9 @@ function getStocksFromApi(req, res) {
              return obj;
         }
         // console.log(apiResponse)
-        let metaData = data["Meta Data"]
-        let symbol = metaData["2. Symbol"]
+        // let metaData = data["Meta Data"]
+        // let symbol = metaData["2. Symbol"]
+        let symbol = `${req.query.symbol}`;
 
         //the main object with all dates by day
         // let fullData = data[stockDay.json];

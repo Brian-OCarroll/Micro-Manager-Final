@@ -26,7 +26,7 @@ function tearDownDb() {
   return mongoose.connection.dropDatabase();
 }
 
-describe('/api/users', function() {
+describe('/users', function() {
   const usernamefaker = faker.internet.email();
   const passwordfaker = faker.internet.password();
 
