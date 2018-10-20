@@ -3,7 +3,7 @@ const { Strategy: LocalStrategy } = require("passport-local");
 
 const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
 
-const { Users } = require("../users/models");
+const { Users } = require("../users/newmodels");
 const { JWT_SECRET } = require("../../config");
 
 const localStrategy = new LocalStrategy(

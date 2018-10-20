@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background:#f7f5e665
+}  
+main{
+    max-width: 1000px;
+    margin: 0 auto;
+}
+/* Graph css */
+.load, .graph.load, .company-info.load{
+    opacity: 1;
+}
+.graph{
+    opacity: 0;
+    transition: opacity 2s ease-in;
+}
+.chart-js{
+    padding-right: 7px;
+    margin: 10px 0;
+}
+.graph-buttons{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px 0;
+}
+.time-button{
+    color: rgb(32, 43, 201);
+    font-family: inherit;
+    border: none;
+    background-color: rgba(255, 0, 0, 0);
+    text-decoration: none;
+}
+.graph-buttons button:hover{
+    cursor: pointer;
+}
+.graph-select{
+    color: black;
+    background-color: rgb(190, 21, 21);
+    outline: none;
+    border-radius: 50px;
+}
+/* nav stuff */
+
+.nav {
+    list-style: none;
+    margin: 0;
+    background: #e8e8e8;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+  }
+  
+.nav a {
+    text-decoration: none;
+    display: block;
+    padding: 1em;
+    color: black;
+}
+  
+.nav a:hover {
+    background: #52658f;
+    color:white
+}
+/* my portfolio css */
+.clickable-cards {
+    border:5px solid black;
+    cursor: pointer;
+}
+.clickable-cards:hover {
+    border:7px solid green
+}
+@media all and (max-width: 800px) {
+    .nav {
+        justify-content: space-around;
+        }
+    }
+@media all and (max-width: 600px) {
+    .nav {
+    flex-flow: column wrap;
+    padding: 0;
+    }
+    
+    .nav a {
+        text-align: center;
+        padding: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav li:last-of-type a {
+        border-bottom: none;
+        }
+}

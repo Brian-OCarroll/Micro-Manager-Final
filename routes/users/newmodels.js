@@ -3,8 +3,9 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
-
+// mongoose.Promise = global.Promise;
+//change to only have username and password
+//avoid arrays
 const userSchema = mongoose.Schema({
     username: {
         type: String,
@@ -14,18 +15,13 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-    //change before production to different ref
-    //change complete
-    //still confused about ref though
-    portfolio: [{ type: mongoose.Schema.Types.ObjectId, ref: "portfolio" }]
+    }
 });
 //display user account info, doesn't store password
 userSchema.methods.serialize = function() {
     return {
-        username: this.username || '',
+        username: this.username,
         id: this._id,
-        portfolio:this.portfolio
     };
 };
 

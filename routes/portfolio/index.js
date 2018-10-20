@@ -1,5 +1,5 @@
 "use strict";
 const { portfolio } = require("./models");
-const { router } = require("./router");
+const { router } = require("./newrouter");
 
 module.exports = { portfolio, router };

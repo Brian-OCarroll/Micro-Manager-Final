@@ -2,56 +2,59 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require('path');
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const morgan = require("morgan");
+const cors = require('cors');
 // const path=require('path');
 
-mongoose.Promise = global.Promise;
-
-const {router: usersRouter} = require('./routes/users');
 const {router: authRouter, localStrategy, jwtStrategy} = require('./routes/auth')
+const {router: usersRouter} = require('./routes/users');
 const { router: stockPullRouter } = require('./routes/stockpull');
-const { router: portfolioRouter} = require('./routes/portfolio')
-
+const { router: portfolioRouter} = require('./routes/portfolio');
 const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require("./config");
 
 const app = express();
 
-app.use(morgan('common'));
-//CORS
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers',"Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
-    if (req.method === 'OPTIONS') {
-      return res.send(204);
-    }
-    next();
-  });
-  
-  //Passport JWT
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(cors());
+app.use(express.static(path.resolve(__dirname, 'public')))
+mongoose.Promise = global.Promise;
 passport.use(localStrategy);
 passport.use(jwtStrategy);
+
+app.use(morgan('common'));
+//CORS
+
+  
+  //Passport JWT
 
 app.use('/users', usersRouter);
 app.use('/auth/', authRouter);
 app.use('/stockpull/', stockPullRouter);
 app.use('/portfolio/', portfolioRouter);
 
-const jwtAuth = passport.authenticate("jwt", { session: false }
-);
 // app.use(express.static(path.join(__dirname, '/public')));
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers',"Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+  if (req.method === 'OPTIONS') {
+    return res.send(204);
+  }
+  next();
+});
+const jwtAuth = passport.authenticate("jwt", { session: false });
 
 //Test Protected endpoint
 app.get("/protected", jwtAuth, (req, res) => {
   return res.json({
-    data: "Snoopy"
+    data: "Hello"
   });
 });
 
-app.use(express.json());
-app.use(express.static("public"));
 
 let server; 
 function runServer(){

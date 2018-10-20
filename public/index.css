@@ -8,11 +8,11 @@
   }
   
   body {
-    background: #3867c9;
+    background: #e8e8e8;
   }
   
   .forms {
-    background: #fff;
+    background:#52658f;
     box-shadow: 0 0 3px #000;
     margin: 30px auto;
     max-width: 500px;
@@ -48,7 +48,7 @@
     display: block;
     text-decoration: none;
     padding: 15px;
-    background: #16377c;
+    background: #333a56;
     color: #fff;
     font-size: 20px;
     float: left;
@@ -62,7 +62,7 @@
   }
   .forms .tab-group li a:hover,
   .forms .tab-group li a:focus {
-    background: #3867c9;
+    background: #be747d8e;
     color: #fff;
   }
   .forms .tab-group .active a {
@@ -91,7 +91,7 @@
   
   #signup fieldset,
   #login fieldset {
-    background: white;
+    background:#f7f5e6;
     border: 0 none;
     border-radius: 3px;
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
@@ -103,7 +103,7 @@
   
   button {
     width: 100px;
-    background: #3867c9;
+    background: #333a56;
     font-weight: bold;
     color: white;
     border: 1px solid #3867c9;
@@ -139,6 +139,7 @@
     width: 90%;
     border: 1px solid #ccc;
     display: inline-block;
+    background:rgb(201, 198, 198)
   }
   
   input[type="text"]:focus,

@@ -1,14 +1,12 @@
-/*********** display stock search results *************/
 let stockChart;
 let graphLabels;
 let graphData;
-const jwtAuth = localStorage.getItem("token");
-$('body').on('click', '.form-submit-button', function (e) {
+$('#my-lists').on('click', '.expand', function (e) {
     e.stopPropagation();
     e.preventDefault();
-    // save form search data to localStorage
-    let symbol = $('.search-query').val();
-
+    // save form search data to sessionStorage
+    
+    let symbol = $('.clickable-cards').attr('data-symbol');
     const options = {
         url: '/stockpull',
         type: 'GET',
@@ -21,16 +19,17 @@ $('body').on('click', '.form-submit-button', function (e) {
     };
     $.ajax(options)
         .fail(function (data) {
-            // console.log(data)
-            $('.searchSummary').html('Stock could not be found')
+            console.log(data)
+            $('.lightbox-container').html('Stock could not be found')
             $('.graph').hide()
         })
         .then(function (data) {
             console.log(data)
             $('.graph').show();
+            //set only the width for images
             let html = `
         <div class="results">
-            <img src="${data.companyImage}" alt="${data.symbol} parent company" height="42" width="42">
+            <img src="${data.companyImage}" alt="${data.symbol} parent company" width="42">
             <p class="symbol"  data-symbol="${data.symbol}">${data.symbol}</p>
             <p class="parent-comp" data-company="${data.parentCompany}">${data.parentCompany}</p> 
             <p class="company-description" data-description="${data.companyDescription}">${data.companyDescription}</p>
@@ -39,17 +38,13 @@ $('body').on('click', '.form-submit-button', function (e) {
             <p class="daylow" data-low="${data.low}">Low: ${data.low}</p>
             <p class="yearhigh" data-thigh="${data.thigh}">52 Week High: ${data.thigh}</p>
             <p class="yearlow" data-tlow="${data.tlow}">52 Week Low: ${data.low}</p>
-            <div class="save-portfolio-form">
-                <p>save to portfolio</p>
-                <button class="save-portfolio-button">Save Here</button>
-            </div>
         </div>
         `;
             // let html2 = `       
             // <p>save to portfolio</p>
             // <button type="submit" class="save-portfolio-button">Save Here</button>
             // `
-            $('.searchSummary').html(html);
+            $('.stock-quote').html(html);
             // $('.add-to-portfolio').html(html2)
         })
 
@@ -121,7 +116,7 @@ $('body').on('click', '.form-submit-button', function (e) {
             console.log(graphData)
 
             stockChart = new Chart(
-                $(".chart-js"),
+                $(".graph-container"),
                 {
                     "type": "line",
                     "data": {
@@ -173,6 +168,7 @@ $('body').on('click', '.form-submit-button', function (e) {
 
 
 
+
 function handleGraph() {
     $('.time-button').on('click', function (event) {
         $('.time-button').removeClass('graph-select');
@@ -196,39 +192,19 @@ function renderGraph(chart, label, data) {
 
 
 $(handleGraph);
+$('document').ajaxStop(()=>{
+    $.fancybox.open({
+        src:'#lightbox-container',
+        type:'inline',
+        opts:{
+            afterShow:function(instance,current){
+                //console.info('show recipe details in modal!')
+            }
+        }
+    });
+})
 
 //save to portfolio
 
-$('.searchSummary').on('click', '.save-portfolio-button', function (e) {
-    e.preventDefault();
-    //find user
-    
-    let symbol = $('.results').find('p').attr('data-symbol');
-    let company = $('.results').find('.parent-comp').html();
-    let description = $('.results').find('.company-description').html();
-    let imageUrl = $('.results').find('img').attr('src');
 
-    
-    $.ajax('/users/checkuser', {
-        headers: {
-          'Authorization': `Bearer ${jwtAuth}`,
-        }
-    })
-    .then((data, txtStatus, jqXHR) => {
-        $.ajax({
-            url: "/portfolio",
-            method: "POST",
-            headers: { Authorization: `Bearer ${jwtAuth}` },
-            contentType: "application/json",
-            data: JSON.stringify({
-                name: company,
-                description: description,
-                image: imageUrl,
-                symbol: symbol,
-                user:data.id
-            })
-        }) 
-        window.location.reload();  
-    })
-});
 

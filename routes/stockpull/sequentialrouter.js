@@ -5,7 +5,8 @@ const bodyParser=require('body-parser');
 // var moment = require('moment');
 
 //STORED IN HEROKU
-const { ALPHA_KEY } = require('../../config');
+const { ALPHA_KEY1 } = require('../../config');
+const { ALPHA_KEY2 } = require('../../config');
 const {NEWS_KEY} = require('../../config');
 
 router.use(bodyParser.urlencoded({extended:true}));
@@ -21,7 +22,7 @@ function getStocksFromApi(req, res) {
         url: 'https://www.alphavantage.co/query',
         qs: {
             function: 'TIME_SERIES_DAILY',
-            apikey: ALPHA_KEY,
+            apikey: ALPHA_KEY1,
             outputsize: 'full',
             symbol: req.query.symbol
         },
@@ -57,9 +58,9 @@ function getStocksFromApi(req, res) {
              return obj;
         }
         // console.log(apiResponse)
-        // let metaData = data["Meta Data"]
-        // let symbol = metaData["2. Symbol"]
-        let symbol = `${req.query.symbol}`;
+        let metaData = data["Meta Data"]
+        let symbol = metaData["2. Symbol"]
+        // let symbol = `${req.query.symbol}`;
 
         //the main object with all dates by day
         // let fullData = data[stockDay.json];
@@ -93,6 +94,7 @@ function getStocksFromApi(req, res) {
         todayData['companyDescription'] = companyDescription;
         todayData['companyImage'] = companyImage;
         return todayData;
+        console.log(todayData)
     })
     .then(function(data){
         // console.log(data)
@@ -112,7 +114,7 @@ function getGraphFromStocksApi(req, res) {
         url: `https://www.alphavantage.co/query`,
         qs: {
             function: 'TIME_SERIES_DAILY',
-            apikey: ALPHA_KEY,
+            apikey: ALPHA_KEY2,
             outputsize: 'full',
             symbol: symbol
         },

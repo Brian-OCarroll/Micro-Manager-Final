@@ -4,8 +4,8 @@
 function loadNav() {
   let url = window.location.href.split("/").pop();
 
-  let user_id = localStorage.getItem("user_id");
-  $(".nav-bar").html(`<ul class='cf'>
+  let user_id = localStorage.getItem("token");
+  $(".nav-bar").html(`<ul class='cf nav'>
         ${
           user_id != null
             ? `
@@ -37,7 +37,7 @@ function loadNav() {
             : ""
         }
         </ul>
-        <a href="#" id="openup">Menu</a>`);
+        `);
 
   $(".login.out").click(() => {
     localStorage.clear();

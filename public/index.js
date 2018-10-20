@@ -36,9 +36,9 @@ $("#Login").click(e => {
       })
     });
     console.log(token.authToken);
-    console.log(token.user)
+    // console.log(token.user)
     localStorage.setItem("token", token.authToken);
-    localStorage.setItem("user_id", token.user);
+    // localStorage.setItem("user_id", token.user);
     window.location.replace("/stocksearch.html");
   })();
 });
@@ -86,8 +86,10 @@ $("#Signup").click(e => {
         password
       })
     });
+    //set session instead of local
+    //maybe use local since going between pages
     localStorage.setItem("token", token.authToken);
-    localStorage.setItem("user_id", token.user);
+    // localStorage.setItem("user_id", token.user);
     window.location.replace("/stocksearch.html");
   })();
 });

@@ -2,7 +2,7 @@
 
 const mongoose = require("mongoose");
 
-const { Users } = require("../users/models");
+const { Users } = require("../users/newmodels");
 //Users schema/model Users called
 const listSchema = mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
@@ -19,7 +19,6 @@ listSchema.virtual("user_id").get(function() {
 listSchema.methods.serialize = function() {
   return {
     id: this._id,
-    user: this.user_id,
     name: this.name,
     image: this.image,
     description: this.description,
