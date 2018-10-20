@@ -13,7 +13,11 @@
 <link rel="stylesheet" href="./stocksearch.css">
 
 <body>
-    <header role="banner"></header>
+    <header role="banner">
+         <nav role="navigation" class="nav-bar cf">
+
+        </nav>
+    </header>
     <main role="main">
         <form action="/stockpull" method="GET" class="stock-search-form">
             <label for="stockSearchBox">Search Here</label>
@@ -23,10 +27,14 @@
         <section class="searchSummary">
 
         </section>
+        <div class="add-to-portfolio">
+            
+        </div>
+
         <section class="graph">
             <form class="graph-buttons">
                 <button class="time-button" type="button">1W</button>
-                <button class="time-button" type••••••••••••="button">1M</button>
+                <button class="time-button" type="button">1M</button>
                 <button class="time-button" type="button">3M</button>
                 <button class="time-button" type="button">1Y</button>
                 <button class="time-button" type="button">5Y</button>
@@ -34,6 +42,7 @@
             <canvas class="chart-js col-12"></canvas>
         </section>
         <script src='./stocksearch.js'></script>
+        <script src="./nav.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>

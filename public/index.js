@@ -36,6 +36,7 @@ $("#Login").click(e => {
       })
     });
     console.log(token.authToken);
+    console.log(token.user)
     localStorage.setItem("token", token.authToken);
     localStorage.setItem("user_id", token.user);
     window.location.replace("/stocksearch.html");

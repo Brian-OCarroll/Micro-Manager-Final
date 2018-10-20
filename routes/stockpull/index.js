@@ -1,3 +1,3 @@
 'use strict';
-const {router} = require('./newrouter');
+const {router} = require('./sequentialrouter');
 module.exports = {router};

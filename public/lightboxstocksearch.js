@@ -5,7 +5,6 @@ let loopGraph;
 let i=1;
 let graphLabels;
 let graphData;
-const jwtAuth = localStorage.getItem("token");
 $('body').on('click', '.form-submit-button', function (e) {
     e.stopPropagation();
     e.preventDefault();
@@ -26,28 +25,14 @@ $('body').on('click', '.form-submit-button', function (e) {
         .then(function (data) {
             // console.log(data)
             let html = `
-        <div class="results">
-            <img src="${data.companyImage}" alt="${data.symbol} parent company" height="42" width="42">
-            <p class="symbol"  data-symbol="${data.symbol}">${data.symbol}</p>
-            <p class="parent-comp" data-company="${data.parentCompany}">${data.parentCompany}</p> 
-            <p class="company-description" data-description="${data.companyDescription}">${data.companyDescription}</p>
-            <p class="closing" data-symbol="${data.close}">Close: ${data.close}</p>
-            <p class="dayhigh" data-high="${data.high}">High: ${data.high}</p>
-            <p class="daylow" data-low="${data.low}">Low: ${data.low}</p>
-            <p class="yearhigh" data-thigh="${data.thigh}">52 Week High: ${data.thigh}</p>
-            <p class="yearlow" data-tlow="${data.tlow}">52 Week Low: ${data.low}</p>
-            <div class="save-portfolio-form">
-                <p>save to portfolio</p>
-                <button class="save-portfolio-button">Save Here</button>
-            </div>
-        </div>
+        <p class="symbol">${data.symbol}</p>
+        <p class="closing">${data.close}</p>
+        <p class="dayhigh">${data.high}</p>
+        <p class="daylow">${data.low}</p>
+        <p class="yearhigh">${data.thigh}</p>
+        <p class="yearlow">${data.low}</p>
         `;
-        // let html2 = `       
-        // <p>save to portfolio</p>
-        // <button type="submit" class="save-portfolio-button">Save Here</button>
-        // `
         $('.searchSummary').html(html);
-        // $('.add-to-portfolio').html(html2)
         })
 
     const options2 = {
@@ -200,41 +185,6 @@ function handlePage(){
 	handleGraph();
 }
 $(handlePage);
-
-//save to portfolio
-
-$('.searchSummary').on('click', '.save-portfolio-button', function(e) {
-    e.preventDefault();
-    if (localStorage.getItem("cardlist-id") != null) {
-        return;
-  }
-    //find user
-    console.log('Hello');
-    if (jwtAuth == null) {
-        alert(`Please login before you save a list`);
-        return;
-  }
-    let symbol=$('.results').find('p').attr('data-symbol');
-    let company=$('.results').find('.parent-comp').html();
-    let description=$('.results').find('.company-description').html();
-    let imageUrl=$('.results').find('img').attr('src');
-
-    
-    $.ajax({
-        url: "/portfolio",
-        method: "POST",
-        headers: { Authorization: `Bearer ${jwtAuth}` },
-        contentType: "application/json",
-        data: JSON.stringify({
-          name: company,
-          description: description,
-          image: imageUrl,
-          symbol: symbol
-        })
-      });
-      window.location.reload();
-    
-});
 
 
 // /*********** display stock graph details in lightbox *************/

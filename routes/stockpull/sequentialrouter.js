@@ -32,11 +32,12 @@ function getStocksFromApi(req, res) {
         url:`https://financialmodelingprep.com/api/company/profile/${req.query.symbol}`,
         json:true
     }
-    request(options)
+    request(options2)
     .then(function(apiResponse){
-        return apiResponse
+        return request(options + apiResponse)
     })
     .then(function(data) {
+        console.log(data)
         // Do whatever you want to transform the data
         function fixKeys(obj) {
             Object.keys(obj).forEach(function (key) {
