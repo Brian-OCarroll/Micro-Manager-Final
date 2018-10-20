@@ -28,6 +28,8 @@ router.get("/", (req, res) => {
               id: portfolio._id,
               user: portfolio.user.serialize(),
               name: portfolio.name,
+              description: portfolio.description,
+              image: portfolio.image,
               symbol: portfolio.symbol
             };
           })
@@ -53,7 +55,8 @@ router.get("/:id", jwtAuth, (req, res) => {
 router.post("/", jsonParser, jwtAuth, async (req, res) => {
     const requiredFields = [
       "name",
-      "symbol"
+      "symbol",
+      "description"
     ];
     for (let i = 0; i < requiredFields.length; i++) {
       const field = requiredFields[i];
@@ -70,16 +73,20 @@ router.post("/", jsonParser, jwtAuth, async (req, res) => {
         try {
           let createdPortfolio = await portfolio.create({
             name: req.body.name,
+            description: req.body.description,
+            image: req.body.image,
             user: req.user.id,
             symbol: req.body.symbol
           });
           user.portfolio.push(createdPortfolio);
           user.save();
-  
+  //might be a problem later with having to send in a user
           res.status(201).json({
             id: createdPortfolio.id,
             user: user.id,
             name: createdPortfolio.name,
+            image: createdPortfolio.image,
+            description: createdPortfolio.description,
             symbol: createdPortfolio.symbol,
           });
         } catch (err) {
@@ -138,6 +145,8 @@ router.post("/", jsonParser, jwtAuth, async (req, res) => {
           user: updatedPortfolio.user,
           name: updatedPortfolio.name,
           symbol: updatedPortfolio.symbol,
+          image: updatedPortfolio.image,
+          description: updatedPortfolio.description
         })
       )
       .catch(err => res.status(500).json({ message: "Internal Server Error" }));

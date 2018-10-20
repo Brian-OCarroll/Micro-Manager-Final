@@ -7,6 +7,8 @@ const { Users } = require("../users/models");
 const listSchema = mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
   name: { type: String, required: true },
+  description: {type:String, required: true},
+  image: {type:String},
   symbol: {type: String, required: true}
 });
 
@@ -19,6 +21,8 @@ listSchema.methods.serialize = function() {
     id: this._id,
     user: this.user_id,
     name: this.name,
+    image: this.image,
+    description: this.description,
     symbol: this.symbol
   };
 };
