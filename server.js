@@ -11,7 +11,7 @@ mongoose.Promise = global.Promise;
 
 const {router: usersRouter} = require('./routes/users');
 const {router: authRouter, localStrategy, jwtStrategy} = require('./routes/auth')
-const { router: stockPullRouter } = require('./routes/stockpull/newrouter');
+const { router: stockPullRouter } = require('./routes/stockpull');
 const { router: portfolioRouter} = require('./routes/portfolio')
 
 const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require("./config");

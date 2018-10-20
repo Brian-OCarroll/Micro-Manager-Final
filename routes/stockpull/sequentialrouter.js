@@ -12,11 +12,11 @@ router.use(bodyParser.urlencoded({extended:true}));
 router.use(bodyParser.json());
 
 // globals
-let searchResultsData;
+
 
 //dont need to parse with request when modifying response data
 function getStocksFromApi(req, res) {
-    const options = {
+    const options1 = {
         method: 'GET',
         url: 'https://www.alphavantage.co/query',
         qs: {
@@ -30,15 +30,23 @@ function getStocksFromApi(req, res) {
     const options2 = {
         method: 'GET',
         url:`https://financialmodelingprep.com/api/company/profile/${req.query.symbol}`,
-        json:true
+        json:true,
+        // contentType: 'html/text'
     }
+    let searchResultsData;
+    //try to maintain the response data from request1 to use in request2
     request(options2)
     .then(function(apiResponse){
-        return request(options + apiResponse)
+        searchResultsData = apiResponse.replace(new RegExp("<pre>", 'g'), "");
+        // console.log(searchResultsData)
+        return request(options1)
     })
     .then(function(data) {
-        console.log(data)
         // Do whatever you want to transform the data
+        let parsedSymbolResults = JSON.parse(searchResultsData);
+        let parentCompany = parsedSymbolResults[`${req.query.symbol}`]["companyName"];
+        let companyDescription= parsedSymbolResults[`${req.query.symbol}`]["description"];
+        let companyImage= parsedSymbolResults[`${req.query.symbol}`]["image"];
         function fixKeys(obj) {
             Object.keys(obj).forEach(function (key) {
                 let newName = key.split('.')[1].trim();
@@ -48,7 +56,7 @@ function getStocksFromApi(req, res) {
             });
              return obj;
         }
-
+        // console.log(apiResponse)
         let metaData = data["Meta Data"]
         let symbol = metaData["2. Symbol"]
 
@@ -80,26 +88,19 @@ function getStocksFromApi(req, res) {
         todayData['thigh'] = `${Math.max.apply(null, arrayLow)}`;
         let tvol = arrayVol / arrayData.length;
         todayData['tVol'] = `${tvol}`
+        todayData['parentCompany'] = parentCompany;
+        todayData['companyDescription'] = companyDescription;
+        todayData['companyImage'] = companyImage;
         return todayData;
     })
     .then(function(data){
-        searchResultsData=data;
-        let hbsObj = {
-            searchDone:true,
-            searchResults:data,
-            layout:false
-        };
-        hbsObj.searchSummary = 'Found relevant data'
-        // res.status(200).render('index, hbsObj');
+        // console.log(data)
         res.status(200).json(data)
     })
     .catch(function(err){
-        let errorHbs={
-          statusCode:500,
-          errorMessage:'Internal Server Error',
-          layout:false
-        };
-        res.status(500).send(errorHbs);      
+        let errorMessage = 'Internal Server Error'
+        console.error(err)
+        res.status(500).send(errorMessage);      
   });
 }
 
