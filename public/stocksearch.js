@@ -19,6 +19,7 @@ $('body').on('click', '.form-submit-button', function (e) {
         },
         dataType: 'json'
     };
+    let myData;
     $.ajax(options)
         .fail(function (data) {
             // console.log(data)
@@ -26,6 +27,7 @@ $('body').on('click', '.form-submit-button', function (e) {
             $('.graph').hide()
         })
         .then(function (data) {
+            myData = data
             console.log(data[0])
             $('.graph').show();
             let html = `
@@ -51,7 +53,7 @@ $('body').on('click', '.form-submit-button', function (e) {
             // `
             $('.searchSummary').html(html);
             // $('.add-to-portfolio').html(html2)
-            return data;
+            return;
         })
         .then(function(data) {
             console.log(data)
@@ -60,7 +62,7 @@ $('body').on('click', '.form-submit-button', function (e) {
 
             //the main object with all dates by day
             // let fullData = data[stockDay.json];
-            let fullData = data[1]["Time Series (Daily)"];
+            let fullData = myData[1]["Time Series (Daily)"];
             console.log(fullData)
             let arrayData = [];
             function fixKeys(obj) {
