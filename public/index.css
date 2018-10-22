@@ -1,149 +1,189 @@
 * {
-    margin: 0;
-    padding: 0;
-  }
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background: #e8e8e8;
+}
+
+.forms {
+  background:#52658f;
+  box-shadow: 0 0 3px #000;
+  margin: 8% auto;
+  max-width: 500px;
+  width:100%;
+  overflow: hidden;
+/*     position: relative; */
+  padding: 0;
+}
+
+.forms h1 {
+  padding: 0 0 20px 0;
+  font-size: 26px;
+  color: #000;
+  font-weight: lighter;
+  text-align: center;
+}
+.forms form {
+/*     padding: 30px; */
+  padding:8%;
+}
+#signup {
+  display: none;
+}
+.forms .tab-group {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+/*     added width   */
+  width:100%;
+}
+/* .forms .tab-group li {
+width:50%;
+} */
+.forms .tab-group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.forms .tab-group li a:hover,
+.forms .tab-group li a:focus {
+  background: #be747d8e;
+  color: #fff;
+}
+.forms .tab-group .active a {
+  background: #fff;
+  color: #444;
+  border: 3px solid transparent;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin-bottom: 0.1em;
+}
+
+h2 {
+  font-size: 1.2em;
+}
+
+#signup,
+#login {
+  width: 83%;
+  margin: 10% auto;
+  text-align: center;
+  position: relative;
+}
+
+#signup fieldset,
+#login fieldset {
+  background:#f7f5e6;
+  border: 0 none;
+  border-radius: 3px;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+  padding: 20px 30px;
+  box-sizing: border-box;
+  width: 80%;
+  margin: 0 10%;
+}
+
+button {
+/*   added width change   */
+  width: 38%;
+  background: #333a56;
+  font-weight: bold;
+  color: white;
+  border: 1px solid #3867c9;
+  border-radius: 1px;
+  cursor: pointer;
+  padding: 10px 5px;
+  margin: 10px 5px;
+  -moz-transition: all 0.6s ease-in-out;
+  -o-transition: all 0.6s ease-in-out;
+  -webkit-transition: all 0.6s ease-in-out;
+  transition: all 0.6s ease-in-out;
+}
+
+button:hover,
+button:focus {
+  background: white;
+  color: #3867c9;
+  border: 1px solid #3867c9;
+}
+
+legend {
+  color: #16377c;
+  text-align: right;
+  border: 1px solid #3867c9;
+  padding: 0.2em 0.5em;
+  background-color: white;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.2);
+}
+
+input {
+  margin-bottom: 3px;
+  padding: 10px;
+  width: 90%;
+  border: 1px solid #ccc;
+  display: inline-block;
+  background:rgb(201, 198, 198)
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border: 3px solid #3867c9;
+}
+
+@media screen and (max-width: 499px) {
+/*   .forms .tab-group li a {
   
-  html {
-    height: 100%;
-  }
-  
-  body {
-    background: #e8e8e8;
-  }
-  
-  .forms {
-    background:#52658f;
-    box-shadow: 0 0 3px #000;
-    margin: 30px auto;
-    max-width: 500px;
-    overflow: hidden;
-    position: relative;
-    padding: 0;
-  }
-  
-  .forms h1 {
-    padding: 0 0 20px 0;
-    font-size: 26px;
-    color: #000;
-    font-weight: lighter;
-    text-align: center;
-  }
-  .forms form {
-    padding: 30px;
-  }
-  #signup {
-    display: none;
-  }
-  .forms .tab-group {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .forms .tab-group:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  .forms .tab-group li a {
-    display: block;
-    text-decoration: none;
-    padding: 15px;
-    background: #333a56;
-    color: #fff;
-    font-size: 20px;
-    float: left;
-    width: 42.8%;
-    text-align: center;
-    border: 3px solid transparent;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
-    -webkit-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
-  }
-  .forms .tab-group li a:hover,
-  .forms .tab-group li a:focus {
-    background: #be747d8e;
-    color: #fff;
-  }
-  .forms .tab-group .active a {
-    background: #fff;
-    color: #444;
-    border: 3px solid transparent;
-    font-weight: bold;
-  }
-  
-  h1 {
-    font-size: 1.5em;
-    margin-bottom: 0.1em;
-  }
-  
-  h2 {
-    font-size: 1.2em;
-  }
-  
-  #signup,
-  #login {
-    width: 400px;
-    margin: 50px auto;
-    text-align: center;
-    position: relative;
-  }
-  
-  #signup fieldset,
-  #login fieldset {
-    background:#f7f5e6;
-    border: 0 none;
-    border-radius: 3px;
-    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-    padding: 20px 30px;
-    box-sizing: border-box;
-    width: 80%;
-    margin: 0 10%;
-  }
-  
-  button {
-    width: 100px;
-    background: #333a56;
-    font-weight: bold;
-    color: white;
-    border: 1px solid #3867c9;
-    border-radius: 1px;
-    cursor: pointer;
-    padding: 10px 5px;
-    margin: 10px 5px;
-    -moz-transition: all 0.6s ease-in-out;
-    -o-transition: all 0.6s ease-in-out;
-    -webkit-transition: all 0.6s ease-in-out;
-    transition: all 0.6s ease-in-out;
-  }
-  
-  button:hover,
-  button:focus {
-    background: white;
-    color: #3867c9;
-    border: 1px solid #3867c9;
-  }
-  
-  legend {
-    color: #16377c;
-    text-align: right;
-    border: 1px solid #3867c9;
-    padding: 0.2em 0.5em;
-    background-color: white;
-    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.2);
-  }
-  
-  input {
-    margin-bottom: 3px;
-    padding: 10px;
-    width: 90%;
-    border: 1px solid #ccc;
-    display: inline-block;
-    background:rgb(201, 198, 198)
-  }
-  
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="password"]:focus {
-    border: 3px solid #3867c9;
-  }
+} */
+
+#signup,
+#login {
+  margin-top:0;
+}
+.tab-group li a  {
+  display: block;
+  margin:0 auto;
+  text-decoration: none;
+/*     padding: 15px; */
+  padding:3%;
+  background: #333a56;
+  color: #fff;
+  font-size: 20px;
+  width: 60%;
+  text-align: center;
+  border: 3px solid transparent;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+}
+@media screen and (min-width:500px){
+.tab-group li a {
+  float: left;
+  display: block;
+  text-decoration: none;
+/*     padding: 15px; */
+  padding:3%;
+  background: #333a56;
+  color: #fff;
+  font-size: 20px;
+  width: 42.8%;
+  text-align: center;
+  border: 3px solid transparent;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+}
