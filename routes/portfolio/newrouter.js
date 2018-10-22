@@ -49,20 +49,30 @@ router.post('/', (req,res) => {
       return res.status(400).send(message);
     }
   }
-
-  portfolio
-    .create({
-      user: req.body.user,
-      name: req.body.name,
-      description: req.body.description,
-      symbol: req.body.symbol,
-      image: req.body.image,
-    })
-    .then(portfolioPost => res.status(201).json(portfolioPost.serialize()))
-    .catch(err => {
-      // console.error(err);
-      res.status(500).json({ error: 'Something went wrong' });
-    });
+  portfolio.find({name: req.body.name})
+  .count()
+  .then(count => {
+    if (count > 0) {
+      // There is an existing user with the same username
+      res.status(400).send('stock already saved');
+    }else{
+          // If there is no existing user, hash the password using the instance method
+    // in models.js
+     portfolio
+     .create({
+       user: req.body.user,
+       name: req.body.name,
+       description: req.body.description,
+       symbol: req.body.symbol,
+       image: req.body.image,
+     })
+     .then(portfolioPost => res.status(201).json(portfolioPost.serialize()))
+     .catch(err => {
+       // console.error(err);
+       res.status(500).json({ error: 'Something went wrong' });
+     });
+    }
+  })
 });
 
 
