@@ -27,18 +27,22 @@
       const htmllist = lists.map(
         list => `
             <div data-symbol="${list.symbol}" class="clickable-cards">
-            <h1>${list.name}</h1>
-            <button data-id="${
-                list.id
-              }" class="delete-list">Delete Stock
-            <button class="expand">
-            Click here to get a realtime stock quote
-            </button>
-            <div class="portfolio">
-              <img src="${list.image}" alt="${list.symbol} Parent Company"  height="42" width="42">
-              <p>${list.symbol}</p>
-              <p>${list.description}</p>
+            
+            <img class="comp-img" src="${list.image}" alt="${list.symbol} Parent Company">
+            <div class="stock-name">
+              <p>${list.name}</p>
+              <p>${list.symbol.toUpperCase()}</p>
             </div>
+            
+
+            <p class="description">${list.description}</p>
+            
+            <button data-id="${
+              list.id
+            }" class="delete-list port-button">Delete Stock
+          <button class="expand port-button">
+          Get realtime stock quote
+          </button>
             </div>
             `
       );

@@ -93,7 +93,9 @@ function getStocksFromApi(req, res) {
         todayData['parentCompany'] = parentCompany;
         todayData['companyDescription'] = companyDescription;
         todayData['companyImage'] = companyImage;
-        return todayData;
+        sentDataArray= [todayData,data]
+        // console.log(sentDataArray)
+        return sentDataArray;
         console.log(todayData)
     })
     .then(function(data){
@@ -107,28 +109,7 @@ function getStocksFromApi(req, res) {
   });
 }
 
-function getGraphFromStocksApi(req, res) {
-    let symbol = req.query.symbol
-    const options = {
-        method: 'GET',
-        url: `https://www.alphavantage.co/query`,
-        qs: {
-            function: 'TIME_SERIES_DAILY',
-            apikey: ALPHA_KEY2,
-            outputsize: 'full',
-            symbol: symbol
-        },
-        json: true
-    }
-    
-    request(options)
-    .then(function(apiResponse){
-        return apiResponse
-    })
-    .then(function(response){
-            res.json(response);
-    })
-}
+
 
 // function getDataFromNewsApi(req, res){
 //     const options = {
@@ -159,9 +140,7 @@ function getGraphFromStocksApi(req, res) {
 
 router.get('/',(req, res) => {
     getStocksFromApi(req, res);
-  });
-router.get('/graph', (req, res)=> {
-    getGraphFromStocksApi(req,res);
-})
+});
+
 
   module.exports = {router};

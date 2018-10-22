@@ -30,10 +30,9 @@ app.use(morgan('common'));
 
   
   //Passport JWT
-
+app.use('/stockpull/', stockPullRouter);
 app.use('/users', usersRouter);
 app.use('/auth/', authRouter);
-app.use('/stockpull/', stockPullRouter);
 app.use('/portfolio/', portfolioRouter);
 
 // app.use(express.static(path.join(__dirname, '/public')));

@@ -26,19 +26,19 @@ $('body').on('click', '.form-submit-button', function (e) {
             $('.graph').hide()
         })
         .then(function (data) {
-            console.log(data)
+            console.log(data[0])
             $('.graph').show();
             let html = `
         <div class="results">
-            <img src="${data.companyImage}" alt="${data.symbol} parent company" height="42" width="42">
-            <p class="symbol"  data-symbol="${data.symbol}">${data.symbol}</p>
-            <p class="parent-comp" data-company="${data.parentCompany}">${data.parentCompany}</p> 
-            <p class="company-description" data-description="${data.companyDescription}">${data.companyDescription}</p>
-            <p class="closing" data-symbol="${data.close}">Close: ${data.close}</p>
-            <p class="dayhigh" data-high="${data.high}">High: ${data.high}</p>
-            <p class="daylow" data-low="${data.low}">Low: ${data.low}</p>
-            <p class="yearhigh" data-thigh="${data.thigh}">52 Week High: ${data.thigh}</p>
-            <p class="yearlow" data-tlow="${data.tlow}">52 Week Low: ${data.low}</p>
+            <img class="comp-img"src="${data[0].companyImage}" alt="${data[0].symbol} parent company" width="42">
+            <p class="symbol"  data-symbol="${data[0].symbol}">${data[0].symbol}</p>
+            <p class="parent-comp" data-company="${data[0].parentCompany}">${data[0].parentCompany}</p> 
+            <p class="company-description" data-description="${data[0].companyDescription}">${data[0].companyDescription}</p>
+            <p class="closing" data-symbol="${data[0].close}">Close: ${data[0].close}</p>
+            <p class="dayhigh" data-high="${data[0].high}">High: ${data[0].high}</p>
+            <p class="daylow" data-low="${data[0].low}">Low: ${data[0].low}</p>
+            <p class="yearhigh" data-thigh="${data[0].thigh}">52 Week High: ${data[0].thigh}</p>
+            <p class="yearlow" data-tlow="${data[0].tlow}">52 Week Low: ${data[0].low}</p>
             <div class="save-portfolio-form">
                 <p>save to portfolio</p>
                 <button class="save-portfolio-button">Save Here</button>
@@ -51,45 +51,34 @@ $('body').on('click', '.form-submit-button', function (e) {
             // `
             $('.searchSummary').html(html);
             // $('.add-to-portfolio').html(html2)
+            return data;
         })
-
-    const options2 = {
-        url: '/stockpull/graph',
-        type: 'GET',
-        cache: true,
-        data: {
-            symbol: symbol,
-        },
-        dataType: 'json',
-    };
-    $.ajax(options2)
-        .then(function (data) {
-            function fixKeys(obj) {
-                Object.keys(obj).forEach(function (key) {
-                    let newName = key.split('.')[1].trim();
-                    //dynamic form of obj.newKey
-                    obj[newName] = obj[key];
-                    delete obj[key];
-                });
-                return obj;
-            }
-
+        .then(function(data) {
+            console.log(data)
             // let metaData = data["Meta Data"]
             // let symbol = metaData["2. Symbol"]
 
             //the main object with all dates by day
             // let fullData = data[stockDay.json];
-            let fullData = data["Time Series (Daily)"];
+            let fullData = data[1]["Time Series (Daily)"];
+            console.log(fullData)
             let arrayData = [];
+            function fixKeys(obj) {
+                Object.keys(obj).forEach(function(key) {
+                    let newName = key.split('.')[1].trim();
+                    obj[newName] = obj[key];
+                    delete obj[key];
+                });
+                return obj;
+            }
             // adds a key value pair for the date, with the date of the stock quote, 
-            //and then deletes the key 'Time Series (Daily)'
             Object.keys(fullData).map(function (key) {
                 let obj = {};
                 obj = fixKeys(fullData[key]);
                 obj['date'] = key;
                 arrayData.push(obj);
             });
-
+            console.log(arrayData)
             graphLabels = { '1W': [], '1M': [], '3M': [], '1Y': [], '5Y': [] };
             graphData = { '1W': [], '1M': [], '3M': [], '1Y': [], '5Y': [] };
             for (let i = 0; i < arrayData.length; i++) {
@@ -116,7 +105,7 @@ $('body').on('click', '.form-submit-button', function (e) {
             }
 
         })
-        .done(function (data) {
+        .done(function() {
             console.log(graphLabels)
             console.log(graphData)
 
@@ -229,6 +218,9 @@ $('.searchSummary').on('click', '.save-portfolio-button', function (e) {
             })
         }) 
         window.location.reload();  
+    })
+    .catch(function(err){
+        alert(err);
     })
 });
 
