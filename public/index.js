@@ -25,6 +25,7 @@ $("#Login").click(e => {
     alert(`Please enter a valid password`);
     return;
   }
+  try{
   (async () => {
     let token = await $.ajax({
       url: "/auth/login",
@@ -41,6 +42,10 @@ $("#Login").click(e => {
     // localStorage.setItem("user_id", token.user);
     window.location.replace("/stocksearch.html");
   })();
+  }catch(error){
+    console.log(error)
+    alert('Username or Password Incorrect')
+  }
 });
 
 // Listener of Signup
