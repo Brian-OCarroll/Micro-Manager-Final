@@ -20,7 +20,7 @@ $('#my-lists').on('click', '.expand', function (e) {
     $.ajax(options)
         .fail(function (data) {
             console.log(data)
-            $('.lightbox-container').html('Stock could not be found')
+            alert('Stock could not be found')
             $('.graph').hide()
         })
         .then(function (data) {
@@ -111,12 +111,12 @@ $('#my-lists').on('click', '.expand', function (e) {
             }
 
         })
-        .done(function (data) {
+        .then(function (data) {
             console.log(graphLabels)
             console.log(graphData)
 
             stockChart = new Chart(
-                $(".graph-container"),
+                $(".chart-js"),
                 {
                     "type": "line",
                     "data": {
@@ -164,6 +164,32 @@ $('#my-lists').on('click', '.expand', function (e) {
             $(".time-button:contains('1M')").addClass('graph-select');
             $(".graph").addClass('load');
         })
+        .done(()=>{
+            $.fancybox.open({
+                src:'#hidden-lightbox',
+                type:'inline',
+                opts:{
+                    afterShow:function(instance,current){
+                        console.log('Check')
+                        handleGraph();
+                    },
+                    afterClose:function(){
+                        $('.graph').html('');
+                        $('.stock-quote').html('');
+                        $('.graph').html(`
+                        <form class="graph-buttons">
+                        <button class="time-button" type="button">1W</button>
+                        <button class="time-button" type="button">1M</button>
+                        <button class="time-button" type="button">3M</button>
+                        <button class="time-button" type="button">1Y</button>
+                        <button class="time-button" type="button">5Y</button>
+                    </form>
+                    <canvas class="chart-js col-12"></canvas>
+                        `);
+                     }
+                }
+            });
+    })
 });
 
 
@@ -192,17 +218,17 @@ function renderGraph(chart, label, data) {
 
 
 $(handleGraph);
-$('document').ajaxStop(()=>{
-    $.fancybox.open({
-        src:'#lightbox-container',
-        type:'inline',
-        opts:{
-            afterShow:function(instance,current){
-                //console.info('show recipe details in modal!')
-            }
-        }
-    });
-})
+// $('document').ajaxStop(()=>{
+//     $.fancybox.open({
+//         src:'#lightbox-container',
+//         // type:'block',
+//         // opts:{
+//         //     afterShow:function(instance,current){
+//         //         //console.info('show recipe details in modal!')
+//         //     }
+//         // }
+//     });
+// })
 
 //save to portfolio
 
