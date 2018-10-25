@@ -1,12 +1,13 @@
 let stockChart;
 let graphLabels;
 let graphData;
+
 $('#my-lists').on('click', '.expand', function (e) {
     e.stopPropagation();
     e.preventDefault();
     // save form search data to sessionStorage
-    
-    let symbol = $('.clickable-cards').attr('data-symbol');
+    // let symbol = document.getElementsByClassName("clickable-cards")[0].getAttribute("data-symbol"); 
+    let symbol = $(this).attr('data-symbol');
     const options = {
         url: '/stockpull',
         type: 'GET',
@@ -17,47 +18,8 @@ $('#my-lists').on('click', '.expand', function (e) {
         },
         dataType: 'json'
     };
+    console.log(options)
     $.ajax(options)
-        .fail(function (data) {
-            console.log(data)
-            alert('Stock could not be found')
-            $('.graph').hide()
-        })
-        .then(function (data) {
-            console.log(data)
-            $('.graph').show();
-            //set only the width for images
-            let html = `
-        <div class="results">
-            <img src="${data.companyImage}" alt="${data.symbol} parent company" width="42">
-            <p class="symbol"  data-symbol="${data.symbol}">${data.symbol}</p>
-            <p class="parent-comp" data-company="${data.parentCompany}">${data.parentCompany}</p> 
-            <p class="company-description" data-description="${data.companyDescription}">${data.companyDescription}</p>
-            <p class="closing" data-symbol="${data.close}">Close: ${data.close}</p>
-            <p class="dayhigh" data-high="${data.high}">High: ${data.high}</p>
-            <p class="daylow" data-low="${data.low}">Low: ${data.low}</p>
-            <p class="yearhigh" data-thigh="${data.thigh}">52 Week High: ${data.thigh}</p>
-            <p class="yearlow" data-tlow="${data.tlow}">52 Week Low: ${data.low}</p>
-        </div>
-        `;
-            // let html2 = `       
-            // <p>save to portfolio</p>
-            // <button type="submit" class="save-portfolio-button">Save Here</button>
-            // `
-            $('.stock-quote').html(html);
-            // $('.add-to-portfolio').html(html2)
-        })
-
-    const options2 = {
-        url: '/stockpull/graph',
-        type: 'GET',
-        cache: true,
-        data: {
-            symbol: symbol,
-        },
-        dataType: 'json',
-    };
-    $.ajax(options2)
         .then(function (data) {
             function fixKeys(obj) {
                 Object.keys(obj).forEach(function (key) {
@@ -68,23 +30,23 @@ $('#my-lists').on('click', '.expand', function (e) {
                 });
                 return obj;
             }
+            // adds a key value pair for the date, with the date of the stock quote, 
+            //and then deletes the key 'Time Series (Daily)'
 
-            // let metaData = data["Meta Data"]
-            // let symbol = metaData["2. Symbol"]
+            let metaData = data["Meta Data"]
+            let symbolIn = metaData["2. Symbol"]
+            // let symbol = `${req.query.symbol}`;
 
             //the main object with all dates by day
             // let fullData = data[stockDay.json];
             let fullData = data["Time Series (Daily)"];
             let arrayData = [];
-            // adds a key value pair for the date, with the date of the stock quote, 
-            //and then deletes the key 'Time Series (Daily)'
             Object.keys(fullData).map(function (key) {
                 let obj = {};
                 obj = fixKeys(fullData[key]);
                 obj['date'] = key;
                 arrayData.push(obj);
             });
-
             graphLabels = { '1W': [], '1M': [], '3M': [], '1Y': [], '5Y': [] };
             graphData = { '1W': [], '1M': [], '3M': [], '1Y': [], '5Y': [] };
             for (let i = 0; i < arrayData.length; i++) {
@@ -109,11 +71,39 @@ $('#my-lists').on('click', '.expand', function (e) {
                     graphData['5Y'].unshift(arrayData[i].close);
                 }
             }
-
+            //current days data
+            let todayData = arrayData[0];
+            //get 52 week high/low
+            let arrayLow = [];
+            let arrayHigh = [];
+            let arrayVol = 0;
+            for (let i = 0; i < 365 && i < arrayData.length; i++) {
+                arrayLow.push(parseInt(arrayData[i].low));
+                arrayHigh.push(parseInt(arrayData[i].high));
+                arrayVol += parseInt(arrayData[i].volume);
+            }
+            todayData['symbol'] = symbolIn;
+            todayData['tlow'] = `${Math.min.apply(null, arrayLow)}`;
+            todayData['thigh'] = `${Math.max.apply(null, arrayLow)}`;
+            let tvol = arrayVol / arrayData.length;
+            todayData['tVol'] = `${tvol}`
+            let html = `
+            <div class="results">
+            <div class="topflex">
+            <p class="symbol"  data-symbol="${todayData.symbol}">${todayData.symbol.toUpperCase()}</p>
+            <p class="closing" data-symbol="${todayData.close}"><strong>Close:</strong> ${todayData.close}</p>
+            </div>
+            <p class="dayhigh" data-high="${todayData.high}">High: ${todayData.high}</p>
+            <p class="daylow" data-low="${todayData.low}">Low: ${todayData.low}</p>
+            <p class="yearhigh" data-thigh="${todayData.thigh}">52 Week High: ${todayData.thigh}</p>
+            <p class="yearlow" data-tlow="${todayData.tlow}">52 Week Low: ${todayData.low}</p>
+        </div>
+        `;
+            $('.stock-quote').html(html);
+            $('.graph').show();
+            return;
         })
         .then(function (data) {
-            console.log(graphLabels)
-            console.log(graphData)
 
             stockChart = new Chart(
                 $(".chart-js"),
@@ -143,7 +133,7 @@ $('#my-lists').on('click', '.expand', function (e) {
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    fontColor: "blue"
+                                    fontColor: "black"
                                 }
                             }],
                             xAxes: [{
@@ -151,7 +141,7 @@ $('#my-lists').on('click', '.expand', function (e) {
                                 distribution: 'series',
                                 bounds: 'data',
                                 ticks: {
-                                    fontColor: "blue",
+                                    fontColor: "black",
                                     source: 'data',
                                     display: true //set to false to remove x axis labels
                                 }
@@ -164,16 +154,19 @@ $('#my-lists').on('click', '.expand', function (e) {
             $(".time-button:contains('1M')").addClass('graph-select');
             $(".graph").addClass('load');
         })
-        .done(()=>{
+        .done(() => {
             $.fancybox.open({
-                src:'#hidden-lightbox',
-                type:'inline',
-                opts:{
-                    afterShow:function(instance,current){
+                src: '#hidden-lightbox',
+                type: 'inline',
+                opts: {
+                    beforeShow: function() {
+                        $(".lightbox-container").css({"background": "#e8e8e8","padding":"0", "vertical-align": "middle"});
+                    },
+                    afterShow: function (instance, current) {
                         console.log('Check')
                         handleGraph();
                     },
-                    afterClose:function(){
+                    afterClose: function (slide) {
                         $('.graph').html('');
                         $('.stock-quote').html('');
                         $('.graph').html(`
@@ -186,10 +179,14 @@ $('#my-lists').on('click', '.expand', function (e) {
                     </form>
                     <canvas class="chart-js col-12"></canvas>
                         `);
-                     }
+                    }
                 }
             });
-    })
+        })
+        .fail(function (data) {
+            // console.log(data)
+            alert('Please wait a minute and then try again!')
+        })
 });
 
 

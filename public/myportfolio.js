@@ -26,24 +26,18 @@
     function displayLists(lists) {
       const htmllist = lists.map(
         list => `
-            <div data-symbol="${list.symbol}" class="clickable-cards">
-            
-            <img class="comp-img" src="${list.image}" alt="${list.symbol} Parent Company">
-            <div class="stock-name">
+            <div class="clickable-cards ${list.symbol}"> 
+            <img class="comp-img flexcard" src="${list.image}" alt="${list.symbol} Parent Company">
+            <div class="stock-name flexcard" >
               <p>${list.name}</p>
               <p>${list.symbol.toUpperCase()}</p>
             </div>
-            
-
-            <p class="description">${list.description}</p>
-            
-            <button data-id="${
-              list.id
-            }" class="delete-list port-button">Delete Stock
-          <button class="expand port-button">
-          Get realtime stock quote
-          </button>
+            <p class="description flexcard">${list.description}</p>
+            <div class="flexbutton flexcard">
+            <button data-id="${list.id}" class="delete-list port-button">Delete Stock</button>
+            <button data-symbol="${list.symbol}"class="expand port-button">Get realtime stock quote</button>
             </div>
+          </div>
             `
       );
       
@@ -81,7 +75,7 @@
     }
     displayLists(portfolioList);
   }else{
-    let message = '<h1>Sorry, No lists yet</h1>'
+    let message = '<h1 class="before-stocks">Try adding some stocks first!</h1>'
       $('#my-lists').html(message)
   }
   })();
