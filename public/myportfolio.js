@@ -33,10 +33,10 @@
               <p>${list.symbol.toUpperCase()}</p>
             </div>
             <p class="description flexcard">${list.description}</p>
-            <div class="flexbutton flexcard">
+            
             <button data-id="${list.id}" class="delete-list port-button">Delete Stock</button>
             <button data-symbol="${list.symbol}"class="expand port-button">Get realtime stock quote</button>
-            </div>
+            
           </div>
             `
       );
