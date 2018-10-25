@@ -49,15 +49,6 @@ router.post('/', (req,res) => {
       return res.status(400).send(message);
     }
   }
-  portfolio.find({name: req.body.name})
-  .count()
-  .then(count => {
-    if (count > 0) {
-      // There is an existing user with the same username
-      res.status(400).send('stock already saved');
-    }else{
-          // If there is no existing user, hash the password using the instance method
-    // in models.js
      portfolio
      .create({
        user: req.body.user,
@@ -71,8 +62,6 @@ router.post('/', (req,res) => {
        // console.error(err);
        res.status(500).json({ error: 'Something went wrong' });
      });
-    }
-  })
 });
 
 
