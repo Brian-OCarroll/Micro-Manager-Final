@@ -56,24 +56,27 @@ app.get("/protected", jwtAuth, (req, res) => {
 
 
 let server; 
-function runServer(){
-  const PORT = process.env.PORT || 8080;
-  return new Promise((resolve,reject)=>{
-    mongoose.connect(DATABASE_URL,error =>{
-      if(error){
-        return reject(error);
+function runServer() {
+  return new Promise((resolve, reject) => {
+    mongoose.connect(
+      require.main === module ? DATABASE_URL : TEST_DATABASE_URL,
+      { useNewUrlParser: true },
+      err => {
+        if (err) {
+          return reject(err);
+        }
+        server = app
+          .listen(PORT, () => {
+            console.log(`Your app is listening on port ${PORT}`);
+            resolve();
+          })
+          .on("error", err => {
+            mongoose.disconnect();
+            reject(err);
+          });
       }
-    server = app.listen(PORT, function(){
-      console.log(`Port is listening on ${process.env.PORT || 8080}`)
-      resolve(server);
-    })
-    .on('error',function(error){
-      mongoose.disconnect();
-      console.log('we got an error on our hands, roger')
-      reject(error);
-    });
+    );
   });
-})
 }
 
 
