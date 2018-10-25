@@ -8,7 +8,7 @@
     <title>Micro Manager</title>
     
 </head>
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> -->
 <link rel="stylesheet" href="./style.css">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -21,11 +21,11 @@
         </nav>
     </header>
     <main role="main">
-        <p>Please limit your requests to 2 a minute due to limitations with the Alphavantage API</p>
+        <h1 class="tip">Please limit your requests to 2 a minute due to limitations with the Alphavantage API</h1>
         <form action="/stockpull" method="GET" class="stock-search-form">
             <label for="stockSearchBox">Search Here</label>
             <input type="text" id="stockSearchBox" class="search-query" placeholder="GOOGL" name='query'>
-            <button type="submit" class="form-submit-button">Search</button>
+            <button type="submit" class="form-submit-button"><i class="fa fa-search"></i></button>
         </form>
         <section class="searchSummary">
 
@@ -45,12 +45,13 @@
             <canvas class="chart-js col-12"></canvas>
         </section>
         <script src="./nav.js"></script>
+        
         <!-- <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script> -->
         <!-- <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js'></script> -->
         <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js'></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-        <script src='./stocksearch.js'></script>
+        <script src='./stocksearchfinal.js'></script>
 </body>
 
 </html>

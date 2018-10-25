@@ -3,7 +3,7 @@ let stockChart;
 let graphLabels;
 let graphData;
 const jwtAuth = localStorage.getItem("token");
-$('body').on('click', '.form-submit-button', function (e) {
+$('main').on('click', '.form-submit-button', function (e) {
     e.stopPropagation();
     e.preventDefault();
     // save form search data to localStorage
@@ -19,68 +19,54 @@ $('body').on('click', '.form-submit-button', function (e) {
         },
         dataType: 'json'
     };
-    let myData;
-    $.ajax(options)
+    const options2 = {
+        url: '/stockpull/company',
+        type: 'GET',
+        cache: true,
+        contentType: "application/json; charset=utf-8",
+        data: {
+            symbol: symbol.toLowerCase()
+        },
+        dataType: 'json'
+    };
+    let companyData;
+    $.ajax(options2)
+        .then(function (data) {
+            companyData = data;
+        })
         .fail(function (data) {
             // console.log(data)
             $('.searchSummary').html('Stock could not be found')
             $('.graph').hide()
         })
+    $.ajax(options)
         .then(function (data) {
-            myData = data
-            console.log(data[0])
-            $('.graph').show();
-            let html = `
-        <div class="results">
-            <img class="comp-img"src="${data[0].companyImage}" alt="${data[0].symbol} parent company" width="42">
-            <p class="symbol"  data-symbol="${data[0].symbol}">${data[0].symbol}</p>
-            <p class="parent-comp" data-company="${data[0].parentCompany}">${data[0].parentCompany}</p> 
-            <p class="company-description" data-description="${data[0].companyDescription}">${data[0].companyDescription}</p>
-            <p class="closing" data-symbol="${data[0].close}">Close: ${data[0].close}</p>
-            <p class="dayhigh" data-high="${data[0].high}">High: ${data[0].high}</p>
-            <p class="daylow" data-low="${data[0].low}">Low: ${data[0].low}</p>
-            <p class="yearhigh" data-thigh="${data[0].thigh}">52 Week High: ${data[0].thigh}</p>
-            <p class="yearlow" data-tlow="${data[0].tlow}">52 Week Low: ${data[0].low}</p>
-            <div class="save-portfolio-form">
-                <p>save to portfolio</p>
-                <button class="save-portfolio-button">Save Here</button>
-            </div>
-        </div>
-        `;
-            // let html2 = `       
-            // <p>save to portfolio</p>
-            // <button type="submit" class="save-portfolio-button">Save Here</button>
-            // `
-            $('.searchSummary').html(html);
-            // $('.add-to-portfolio').html(html2)
-            return;
-        })
-        .then(function(data) {
-            console.log(data)
-            // let metaData = data["Meta Data"]
-            // let symbol = metaData["2. Symbol"]
-
-            //the main object with all dates by day
-            // let fullData = data[stockDay.json];
-            let fullData = myData[1]["Time Series (Daily)"];
-            console.log(fullData)
-            let arrayData = [];
             function fixKeys(obj) {
-                Object.keys(obj).forEach(function(key) {
+                Object.keys(obj).forEach(function (key) {
                     let newName = key.split('.')[1].trim();
+                    //dynamic form of obj.newKey
                     obj[newName] = obj[key];
                     delete obj[key];
                 });
                 return obj;
             }
             // adds a key value pair for the date, with the date of the stock quote, 
+            //and then deletes the key 'Time Series (Daily)'
+
+            let metaData = data["Meta Data"]
+            let symbol = metaData["2. Symbol"]
+            // let symbol = `${req.query.symbol}`;
+
+            //the main object with all dates by day
+            // let fullData = data[stockDay.json];
+            let fullData = data["Time Series (Daily)"];
+            let arrayData = [];
             Object.keys(fullData).map(function (key) {
                 let obj = {};
                 obj = fixKeys(fullData[key]);
                 obj['date'] = key;
                 arrayData.push(obj);
             });
-            console.log(arrayData)
             graphLabels = { '1W': [], '1M': [], '3M': [], '1Y': [], '5Y': [] };
             graphData = { '1W': [], '1M': [], '3M': [], '1Y': [], '5Y': [] };
             for (let i = 0; i < arrayData.length; i++) {
@@ -105,10 +91,53 @@ $('body').on('click', '.form-submit-button', function (e) {
                     graphData['5Y'].unshift(arrayData[i].close);
                 }
             }
-
+            //current days data
+            let todayData = arrayData[0];
+            //get 52 week high/low
+            let arrayLow = [];
+            let arrayHigh = [];
+            let arrayVol = 0;
+            for (let i = 0; i < 365 && i < arrayData.length; i++) {
+                arrayLow.push(parseInt(arrayData[i].low));
+                arrayHigh.push(parseInt(arrayData[i].high));
+                arrayVol += parseInt(arrayData[i].volume);
+            }
+            todayData['symbol'] = symbol;
+            todayData['tlow'] = `${Math.min.apply(null, arrayLow)}`;
+            todayData['thigh'] = `${Math.max.apply(null, arrayLow)}`;
+            let tvol = arrayVol / arrayData.length;
+            todayData['tVol'] = `${tvol}`
+            todayData['parentCompany'] = companyData["companyName"];
+            todayData['companyDescription'] = companyData["description"];
+            todayData['companyImage'] = companyData["image"];
+            let html = `
+        <div class="results">
+            <img src="${todayData.companyImage}" alt="${todayData.symbol} parent company" >
+            <div class="company-info">
+            <p class="symbol"  data-symbol="${todayData.symbol}">${todayData.symbol.toUpperCase()}</p>
+            <p class="parent-comp" data-company="${todayData.parentCompany}">${todayData.parentCompany}</p> 
+            </div>
+            <p class="company-description" data-description="${todayData.companyDescription}">${todayData.companyDescription}</p>
+            <p class="closing" data-symbol="${todayData.close}"><strong>Close:</strong> ${todayData.close}</p>
+            <p class="dayhigh" data-high="${todayData.high}"><strong>High:</strong> ${todayData.high}</p>
+            <p class="daylow" data-low="${todayData.low}"><strong>Low:</strong> ${todayData.low}</p>
+            <p class="yearhigh" data-thigh="${todayData.thigh}"><strong>52 Week High:</strong> ${todayData.thigh}</p>
+            <p class="yearlow" data-tlow="${todayData.tlow}"><strong>52 Week Low:</strong> ${todayData.low}</p>
+            <div class="save-portfolio-form">
+                <button class="save-portfolio-button">Save To Portfolio</button>
+            </div>
+        </div>
+        `;
+            // let html2 = `       
+            // <p>save to portfolio</p>
+            // <button type="submit" class="save-portfolio-button">Save Here</button>
+            // `
+            $('.searchSummary').html(html);
+            $('.graph').show();
         })
-        .done(function() {
-            console.log(graphLabels)
+        .done(function (data) {
+            console.log(graphLabels['1W'])
+            console.log(graphLabels['1M'])
             console.log(graphData)
 
             stockChart = new Chart(
@@ -160,6 +189,11 @@ $('body').on('click', '.form-submit-button', function (e) {
             $(".time-button:contains('1M')").addClass('graph-select');
             $(".graph").addClass('load');
         })
+        .fail(function (data) {
+            // console.log(data)
+            $('.searchSummary').html('Stock could not be found')
+            $('.graph').hide()
+        })
 });
 
 
@@ -193,36 +227,36 @@ $(handleGraph);
 $('.searchSummary').on('click', '.save-portfolio-button', function (e) {
     e.preventDefault();
     //find user
-    
+
     let symbol = $('.results').find('p').attr('data-symbol');
     let company = $('.results').find('.parent-comp').html();
     let description = $('.results').find('.company-description').html();
     let imageUrl = $('.results').find('img').attr('src');
 
-    
+
     $.ajax('/users/checkuser', {
         headers: {
-          'Authorization': `Bearer ${jwtAuth}`,
+            'Authorization': `Bearer ${jwtAuth}`,
         }
     })
-    .then((data, txtStatus, jqXHR) => {
-        $.ajax({
-            url: "/portfolio",
-            method: "POST",
-            headers: { Authorization: `Bearer ${jwtAuth}` },
-            contentType: "application/json",
-            data: JSON.stringify({
-                name: company,
-                description: description,
-                image: imageUrl,
-                symbol: symbol,
-                user:data.id
+        .then((data, txtStatus, jqXHR) => {
+            $.ajax({
+                url: "/portfolio",
+                method: "POST",
+                headers: { Authorization: `Bearer ${jwtAuth}` },
+                contentType: "application/json",
+                data: JSON.stringify({
+                    name: company,
+                    description: description,
+                    image: imageUrl,
+                    symbol: symbol,
+                    user: data.id
+                })
             })
-        }) 
-        window.location.reload();  
-    })
-    .catch(function(err){
-        alert(err);
-    })
+            window.location.reload();
+        })
+        .fail(function (err) {
+            alert('Stock already Added!');
+        })
 });
 
