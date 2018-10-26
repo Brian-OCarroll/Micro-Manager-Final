@@ -12,6 +12,9 @@ $('main').on('click', '.form-submit-button', function (e) {
     const options = {
         url: '/stockpull',
         type: 'GET',
+        beforeSend: function(){
+            $('.ajax-loader').css("visibility", "visible");
+        },
         cache: true,
         contentType: "application/json; charset=utf-8",
         data: {
@@ -136,6 +139,7 @@ $('main').on('click', '.form-submit-button', function (e) {
             $('.graph').show();
         })
         .done(function (data) {
+            $('.ajax-loader').css("visibility", "hidden");
             console.log(graphLabels['1W'])
             console.log(graphLabels['1M'])
             console.log(graphData)
@@ -233,18 +237,19 @@ $('.searchSummary').on('click', '.save-portfolio-button', function (e) {
     let description = $('.results').find('.company-description').html();
     let imageUrl = $('.results').find('img').attr('src');
 
-
     $.ajax('/users/checkuser', {
         headers: {
             'Authorization': `Bearer ${jwtAuth}`,
         }
-    })
+        })
         .then((data, txtStatus, jqXHR) => {
-            $.ajax({
+            console.log(data)
+           return $.ajax({
                 url: "/portfolio",
                 method: "POST",
                 headers: { Authorization: `Bearer ${jwtAuth}` },
                 contentType: "application/json",
+                // error: function(err){console.log(err)},
                 data: JSON.stringify({
                     name: company,
                     description: description,
@@ -253,10 +258,13 @@ $('.searchSummary').on('click', '.save-portfolio-button', function (e) {
                     user: data.id
                 })
             })
+        })
+        .then((response)=>{
             window.location.reload();
         })
-        .fail(function (err) {
-            alert('Stock already Added!');
+        .catch(function (err) {
+            alert('Stock already Saved')
+            return;
         })
 });
 

@@ -12,6 +12,9 @@ $('#my-lists').on('click', '.expand', function (e) {
         url: '/stockpull',
         type: 'GET',
         cache: true,
+        beforeSend: function(){
+            $('.ajax-loader').show();
+        },
         contentType: "application/json; charset=utf-8",
         data: {
             symbol: symbol
@@ -155,6 +158,7 @@ $('#my-lists').on('click', '.expand', function (e) {
             $(".graph").addClass('load');
         })
         .done(() => {
+            $('.ajax-loader').hide();
             $.fancybox.open({
                 src: '#hidden-lightbox',
                 type: 'inline',

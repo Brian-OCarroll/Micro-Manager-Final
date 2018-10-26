@@ -27,6 +27,10 @@
       const htmllist = lists.map(
         list => `
             <div class="clickable-cards ${list.symbol}"> 
+            <div class="ajax-loader" style="display: none;">
+                <p>Loading Quote</p>
+                <img src="../ajax-loader2.gif" alt="loading-gif" class="img-responsive" />
+            </div>
             <img class="comp-img flexcard" src="${list.image}" alt="${list.symbol} Parent Company">
             <div class="stock-name flexcard" >
               <p>${list.name}</p>

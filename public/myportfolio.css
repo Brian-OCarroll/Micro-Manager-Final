@@ -102,9 +102,17 @@ main{
     background:#52658f;
     color:#e8e8e8;
 }
-/* .clickable-cards:hover {
-    
-} */
+/* .ajax-loader {
+    visibility: hidden;
+
+  } */
+  
+  /* .ajax-loader img {
+    position: relative;
+    top:50%;
+    left:50%;
+  } */
+
 .stock-name {
     display:flex;
     flex-flow: row nowrap;
