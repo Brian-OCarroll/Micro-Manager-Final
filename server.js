@@ -25,7 +25,7 @@ mongoose.Promise = global.Promise;
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-app.use(morgan('common'));
+app.use(morgan('dev'));
 //CORS
 
   
