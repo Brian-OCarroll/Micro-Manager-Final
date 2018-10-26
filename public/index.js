@@ -15,7 +15,7 @@ $(document).ready(function () {
 
 $("#Login").click(e => {
   e.preventDefault();
-  let username = $('[name="loguser"]').val();
+  let username = $('[name="loguser"]').val().trim();
   let password = $('[name="logpass"]').val();
   if (username === "") {
     alert(`Please enter valid username`);
@@ -43,7 +43,7 @@ $("#Login").click(e => {
     window.location.replace("/stocksearch.html");
   })();
   }catch(error){
-    console.log(error)
+    console.log(JSON.stringify(error))
     alert('Username or Password Incorrect')
   }
 });
@@ -52,7 +52,7 @@ $("#Login").click(e => {
 
 $("#Signup").click(e => {
   e.preventDefault();
-  let username = $('[name="username"]').val();
+  let username = $('[name="username"]').val().trim();
   let password = $('[name="pass"]').val();
   let cpassword = $('[name="checkpass"]').val();
   if (password !== cpassword) {
@@ -70,6 +70,7 @@ $("#Signup").click(e => {
 
   //Create New User Request
   (async () => {
+    try{
     await $.ajax({
       url: "/users",
       method: "POST",
@@ -77,10 +78,7 @@ $("#Signup").click(e => {
       data: JSON.stringify({
         username,
         password
-      }),
-      error: function(err) {
-        console.log(`Error!`, err);
-      }
+      })
     });
     let token = await $.ajax({
       url: "/auth/login",
@@ -96,5 +94,37 @@ $("#Signup").click(e => {
     localStorage.setItem("token", token.authToken);
     // localStorage.setItem("user_id", token.user);
     window.location.replace("/stocksearch.html");
+  }catch(err){
+    console.log(JSON.stringify(err))
+  }
   })();
 });
+
+
+
+
+// (async () => {
+//   await $.ajax({
+//     url: "/users",
+//     method: "POST",
+//     contentType: "application/json",
+//     data: JSON.stringify({
+//       username,
+//       password
+//     })
+//   });
+//   let token = await $.ajax({
+//     url: "/auth/login",
+//     method: "POST",
+//     contentType: "application/json",
+//     data: JSON.stringify({
+//       username,
+//       password
+//     })
+//   });
+//   //set session instead of local
+//   //maybe use local since going between pages
+//   localStorage.setItem("token", token.authToken);
+//   // localStorage.setItem("user_id", token.user);
+//   window.location.replace("/stocksearch.html");
+// })();
