@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 const { Users } = require("../users/newmodels");
 //Users schema/model Users called
 const listSchema = mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "Users", unique:true },
-  name: { type: String, required: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "Users",},
+  name: { type: String, required: true,},
   description: {type:String, required: true},
   image: {type:String},
   symbol: {type: String, required: true}

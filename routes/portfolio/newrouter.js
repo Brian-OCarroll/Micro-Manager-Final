@@ -49,17 +49,30 @@ router.post('/', (req,res) => {
       return res.status(400).send(message);
     }
   }
-     portfolio
-     .create({
+  portfolio.find({$and: [{name:req.body.name}, {user:req.body.user}]})
+  .countDocuments()
+  .then(count =>{
+    if(count>0){
+      console.log(count)
+      return Promise.reject({
+        code: 400,
+          message: 'Stock already added'
+      })
+    }
+    return;
+  })
+  .then(data =>{
+    return portfolio.create({
        user: req.body.user,
        name: req.body.name,
        description: req.body.description,
        symbol: req.body.symbol,
        image: req.body.image,
-     })
-     .then(portfolioPost => res.status(201).json(portfolioPost.serialize()))
-     .catch(err => {
-       // console.error(err);
+     });
+    })
+  .then(portfolioPost => res.status(201).json(portfolioPost.serialize()))
+  .catch(err => {
+       console.error(err);
        res.status(500).json({ error: 'Something went wrong' });
      });
 });

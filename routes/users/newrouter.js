@@ -136,6 +136,7 @@ router.post('/', jsonParser, checkPostReq, (req, res) => {
 router.get('/checkuser', jwtAuth, (req, res) => {
     return Users.findOne({ username: req.user.username })
       .then(doc => {
+        console.log(req.user.username)
         res.json(doc.serialize())
       })
       .catch(err => {
@@ -143,19 +144,19 @@ router.get('/checkuser', jwtAuth, (req, res) => {
         res.status(500).end('Something went wrong')
       })
 })
-//delete if other changes work
-//change before release
-router.get("/:id", jwtAuth, (req, res) => {
-  Users.findById(req.params.id)
-    // .populate("portfolio")
-    .exec(function(err, user) {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ message: "Internal server error" });
-      }
-      res.status(200).json(user.serialize());
-    });
-});
+// //delete if other changes work
+// //change before release
+// router.get("/:id", jwtAuth, (req, res) => {
+//   Users.findById(req.params.id)
+//     // .populate("portfolio")
+//     .exec(function(err, user) {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).json({ message: "Internal server error" });
+//       }
+//       res.status(200).json(user.serialize());
+//     });
+// });
 //Remove before production
 router.get('/', (req, res) => {
     return Users.find()
