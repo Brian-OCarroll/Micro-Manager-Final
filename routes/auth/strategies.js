@@ -38,6 +38,7 @@ const localStrategy = new LocalStrategy(
           return callback(null, false, err);
         }
         return callback(err, false);
+        
       });
   }
 );

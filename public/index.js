@@ -25,6 +25,7 @@ $("#Login").click(e => {
     alert(`Please enter a valid password`);
     return;
   }
+
   try{
   (async () => {
     let token = await $.ajax({
@@ -35,7 +36,11 @@ $("#Login").click(e => {
         username,
         password
       })
-    });
+    })
+    console.log(token)
+    // token.then(function(data){
+    //   console.log(data)
+    // })
     console.log(token.authToken);
     // console.log(token.user)
     localStorage.setItem("token", token.authToken);

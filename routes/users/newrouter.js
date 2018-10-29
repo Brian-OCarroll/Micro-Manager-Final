@@ -95,7 +95,7 @@ function checkPostReq(req,res,next){
 //create post endpoint to register a new user
 
 router.post('/', jsonParser, checkPostReq, (req, res) => {
-
+  // res.status(500).json({ code: 500, message: "Internal server error" })
   let {username, password} = req.body;
 
   // check if conflicts database and create an account if no conflict
