@@ -10,9 +10,9 @@ basic stock info can be saved to your portfolio with a button click if logged in
 will be redirected to the login screen. The porfolio page displays all stocks saved to your portfolio. From there
 a user can either get a realtime quote, rendered in a lightbox, or delete saved stocks with the click of a button
 
-## Demo 
+## Live App 
 
-- [Live Demo](https://micro-manager.herokuapp.com)
+- [Live App](https://micro-manager.herokuapp.com)
 
 ###Demo Login (no caps)
 
