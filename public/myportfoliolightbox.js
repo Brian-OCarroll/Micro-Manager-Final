@@ -37,10 +37,8 @@ $('#my-lists').on('click', '.expand', function (e) {
 
             let metaData = data["Meta Data"]
             let symbolIn = metaData["2. Symbol"]
-            // let symbol = `${req.query.symbol}`;
 
-            //the main object with all dates by day
-            // let fullData = data[stockDay.json];
+            //the main object with all dates indexed
             let fullData = data["Time Series (Daily)"];
             let arrayData = [];
             Object.keys(fullData).map(function (key) {

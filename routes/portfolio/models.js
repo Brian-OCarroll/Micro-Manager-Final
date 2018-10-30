@@ -3,7 +3,7 @@
 const mongoose = require("mongoose");
 
 const { Users } = require("../users/newmodels");
-//Users schema/model Users called
+//Users schema/model referenced by obj id
 const listSchema = mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "Users",},
   name: { type: String, required: true,},

@@ -37,14 +37,7 @@ $("#Login").click(e => {
         password
       })
     })
-    console.log(token)
-    // token.then(function(data){
-    //   console.log(data)
-    // })
-    console.log(token.authToken);
-    // console.log(token.user)
     localStorage.setItem("token", token.authToken);
-    // localStorage.setItem("user_id", token.user);
     window.location.replace("/stocksearch.html");
   })();
   }catch(error){
@@ -94,42 +87,10 @@ $("#Signup").click(e => {
         password
       })
     });
-    //set session instead of local
-    //maybe use local since going between pages
     localStorage.setItem("token", token.authToken);
-    // localStorage.setItem("user_id", token.user);
     window.location.replace("/stocksearch.html");
   }catch(err){
-    console.log(JSON.stringify(err))
+    alert(err);
   }
   })();
 });
-
-
-
-
-// (async () => {
-//   await $.ajax({
-//     url: "/users",
-//     method: "POST",
-//     contentType: "application/json",
-//     data: JSON.stringify({
-//       username,
-//       password
-//     })
-//   });
-//   let token = await $.ajax({
-//     url: "/auth/login",
-//     method: "POST",
-//     contentType: "application/json",
-//     data: JSON.stringify({
-//       username,
-//       password
-//     })
-//   });
-//   //set session instead of local
-//   //maybe use local since going between pages
-//   localStorage.setItem("token", token.authToken);
-//   // localStorage.setItem("user_id", token.user);
-//   window.location.replace("/stocksearch.html");
-// })();

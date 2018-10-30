@@ -7,38 +7,34 @@ const jsonParser = bodyParser.json();
 
 const {portfolio} = require('./models');
 
-console.log('can you hear me CRUD router!')
 
 const jwtAuth = require('passport').authenticate('jwt', {
   session: false,
-  //change
-  failureRedirect: 'auth/login'
+  failureRedirect: '/auth/login'
 });
 
-// my GET mongo endpoint
+// GET mongo endpoint
 router.get('/', jwtAuth, (req,res) =>{
    portfolio.find({ user: req.user.id }).then(posts =>{
       res.json(posts.map(post=> post.serialize()));
     })
     .catch(err =>{
-      // console.log(err);
       res.status(500).json({error:'Internal Server Error'})
     });
   });
 
-//my Get mongo endpoint by ID
+//Get mongo endpoint by ID
 router.get('/:id',(req,res) => {
 
   portfolio
     .findById(req.params.id)
     .then(post => res.json(post.serialize()))
       .catch(error =>{
-      // console.log(error);
       res.status(500).json({error:'Internal Server Error'})
     });
 });
 
-//My Post Endpoint for Mongo
+//Post Endpoint for Mongo
 router.post('/', (req,res) => {
   const requiredkeys = ['name','symbol','description','user'];
 
@@ -53,7 +49,6 @@ router.post('/', (req,res) => {
   .countDocuments()
   .then(count =>{
     if(count>0){
-      console.log(count)
       return Promise.reject({
         code: 400,
           message: 'Stock already added'
@@ -72,14 +67,13 @@ router.post('/', (req,res) => {
     })
   .then(portfolioPost => res.status(201).json(portfolioPost.serialize()))
   .catch(err => {
-       console.error(err);
        res.status(500).json({ error: 'Something went wrong' });
      });
 });
 
 
 
-//My delete endpoint
+//Delete endpoint
  router.delete('/:id', (req, res) => {
   portfolio
     .findByIdAndRemove(req.params.id)
@@ -87,14 +81,13 @@ router.post('/', (req,res) => {
       res.status(204).json({ message: 'success' });
     })
     .catch(err => {
-      console.error(err);
       res.status(500).json({ error: 'something went wrong while deleting' });
     });
 });
 
 
 
-// my put endpoint
+//Put endpoint not used directly in app
 router.put('/:id', (req, res) => {
   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
     res.status(400).json({

@@ -38,7 +38,6 @@ $('main').on('click', '.form-submit-button', function (e) {
             companyData = data;
         })
         .fail(function (data) {
-            // console.log(data)
             $('.searchSummary').html('Stock could not be found')
             $('.graph').hide()
         })
@@ -47,21 +46,17 @@ $('main').on('click', '.form-submit-button', function (e) {
             function fixKeys(obj) {
                 Object.keys(obj).forEach(function (key) {
                     let newName = key.split('.')[1].trim();
-                    //dynamic form of obj.newKey
                     obj[newName] = obj[key];
                     delete obj[key];
                 });
                 return obj;
             }
-            // adds a key value pair for the date, with the date of the stock quote, 
-            //and then deletes the key 'Time Series (Daily)'
+            //indexes each day starting from 0 adding a key with the index position
 
             let metaData = data["Meta Data"]
             let symbol = metaData["2. Symbol"]
-            // let symbol = `${req.query.symbol}`;
 
             //the main object with all dates by day
-            // let fullData = data[stockDay.json];
             let fullData = data["Time Series (Daily)"];
             let arrayData = [];
             Object.keys(fullData).map(function (key) {
@@ -131,19 +126,11 @@ $('main').on('click', '.form-submit-button', function (e) {
             </div>
         </div>
         `;
-            // let html2 = `       
-            // <p>save to portfolio</p>
-            // <button type="submit" class="save-portfolio-button">Save Here</button>
-            // `
             $('.searchSummary').html(html);
             $('.graph').show();
         })
         .done(function (data) {
             $('.ajax-loader').css("visibility", "hidden");
-            console.log(graphLabels['1W'])
-            console.log(graphLabels['1M'])
-            console.log(graphData)
-
             stockChart = new Chart(
                 $(".chart-js"),
                 {
@@ -194,7 +181,6 @@ $('main').on('click', '.form-submit-button', function (e) {
             $(".graph").addClass('load');
         })
         .fail(function (data) {
-            // console.log(data)
             $('.searchSummary').html('Stock could not be found')
             $('.graph').hide()
         })
@@ -230,7 +216,7 @@ $(handleGraph);
 
 $('.searchSummary').on('click', '.save-portfolio-button', function (e) {
     e.preventDefault();
-    //find user
+    //find user obj_id
 
     let symbol = $('.results').find('p').attr('data-symbol');
     let company = $('.results').find('.parent-comp').html();
@@ -243,13 +229,12 @@ $('.searchSummary').on('click', '.save-portfolio-button', function (e) {
         }
         })
         .then((data, txtStatus, jqXHR) => {
-            console.log(data)
+
            return $.ajax({
                 url: "/portfolio",
                 method: "POST",
                 headers: { Authorization: `Bearer ${jwtAuth}` },
                 contentType: "application/json",
-                // error: function(err){console.log(err)},
                 data: JSON.stringify({
                     name: company,
                     description: description,

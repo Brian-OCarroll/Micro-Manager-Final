@@ -30,7 +30,6 @@ body {
   text-align: center;
 }
 .forms form {
-/*     padding: 30px; */
   padding:8%;
 }
 #signup {
@@ -40,12 +39,9 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
-/*     added width   */
   width:100%;
 }
-/* .forms .tab-group li {
-width:50%;
-} */
+
 .forms .tab-group:after {
   content: "";
   display: table;
@@ -94,7 +90,6 @@ h2 {
 }
 
 button {
-/*   added width change   */
   width: 38%;
   background: #333a56;
   font-weight: bold;
@@ -142,9 +137,6 @@ input[type="password"]:focus {
 }
 
 @media screen and (max-width: 499px) {
-/*   .forms .tab-group li a {
-  
-} */
 
 #signup,
 #login {
@@ -154,7 +146,6 @@ input[type="password"]:focus {
   display: block;
   margin:0 auto;
   text-decoration: none;
-/*     padding: 15px; */
   padding:3%;
   background: #333a56;
   color: #fff;
@@ -173,7 +164,6 @@ input[type="password"]:focus {
   float: left;
   display: block;
   text-decoration: none;
-/*     padding: 15px; */
   padding:3%;
   background: #333a56;
   color: #fff;

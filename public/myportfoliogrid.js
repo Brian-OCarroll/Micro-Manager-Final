@@ -1,7 +1,6 @@
 (async function() {
-    // Access user's id established in index.js
-    // let user_id = localStorage.getItem("user_id");
-    // Access User's cardlist based on their id
+    // Access user's id established in with token
+    // Access User's cardlist based on their obj_id
     let portfolio = await $.ajax({
       url: `/portfolio/`,
       headers: {
@@ -11,7 +10,6 @@
       contentType: "application/json"
       
     });
-    console.log(portfolio)
   //change to portfolio = user.portfolio
   if(portfolio.length>0){
    let portfolioList =  portfolio.map(list => ({
@@ -47,21 +45,11 @@
       
       $("#my-lists").html(htmllist);
   
-      //Edit List Button
-    //   $(".edit-list").click(e => {
-    //     e.preventDefault();
-    //     let list = e.currentTarget;
-    //     let list_id = $(list).data("id");
-    //     localStorage.setItem("cardlist-id", list_id);
-    //     window.location.replace("/index.html");
-    //   });
-  
       //Delete List Button
       $(".delete-list").click(e => {
         e.preventDefault();
         let list = e.currentTarget;
         let list_id = $(list).data("id");
-        console.log(list_id)
         $.ajax({
           url: `/portfolio/${list_id}`,
           headers: {

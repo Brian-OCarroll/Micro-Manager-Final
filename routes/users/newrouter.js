@@ -15,7 +15,7 @@ const jsonParser = bodyParser.json();
 const localAuth = passport.authenticate("jwt", { session: false });
 
 function checkPostReq(req,res,next){
-  // check requiredFields exist. (user's registration form may contain several fields, and only certain fields are definitely required)
+  // check for requiredFields 
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
   if (missingField) {
@@ -27,7 +27,7 @@ function checkPostReq(req,res,next){
     });
   }
 
-  // check certain fields have the right type (in front-end, ensure to have password type as string instead of number)
+  // make sure password has string
   const stringFields = ['username', 'password'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
@@ -41,7 +41,7 @@ function checkPostReq(req,res,next){
     });
   }
 
-  // If the username and password aren't trimmed we give an error.  Users might expect that these will work without trimming (i.e. they want the password "foobar ", including the space at the end).  We need to reject such values explicitly so the users know what's happening, rather than silently trimming them and expecting the user to understand. We'll silently trim the other fields, because they aren't credentials used to log in, so it's less of a problem.
+  // error if username/password aren't trimmed
   const explicityTrimmedFields = ['username', 'password'];
   const nonTrimmedField = explicityTrimmedFields.find(
     field => req.body[field].trim() !== req.body[field]
@@ -95,7 +95,6 @@ function checkPostReq(req,res,next){
 //create post endpoint to register a new user
 
 router.post('/', jsonParser, checkPostReq, (req, res) => {
-  // res.status(500).json({ code: 500, message: "Internal server error" })
   let {username, password} = req.body;
 
   // check if conflicts database and create an account if no conflict
@@ -125,7 +124,7 @@ router.post('/', jsonParser, checkPostReq, (req, res) => {
       return res.status(201).json(user.serialize());
     })
     .catch(err => {
-      // Forward validation errors on to the client, otherwise give a 500 error because something unexpected has happened
+      // Forward validation errors on to the client, otherwise give a 500 error 
       if (err.reason === 'ValidationError') {
         return res.status(err.code).json(err);
       }
@@ -136,32 +135,11 @@ router.post('/', jsonParser, checkPostReq, (req, res) => {
 router.get('/checkuser', jwtAuth, (req, res) => {
     return Users.findOne({ username: req.user.username })
       .then(doc => {
-        console.log(req.user.username)
         res.json(doc.serialize())
       })
       .catch(err => {
-        console.error(err);
         res.status(500).end('Something went wrong')
       })
 })
-// //delete if other changes work
-// //change before release
-// router.get("/:id", jwtAuth, (req, res) => {
-//   Users.findById(req.params.id)
-//     // .populate("portfolio")
-//     .exec(function(err, user) {
-//       if (err) {
-//         console.error(err);
-//         res.status(500).json({ message: "Internal server error" });
-//       }
-//       res.status(200).json(user.serialize());
-//     });
-// });
-//Remove before production
-router.get('/', (req, res) => {
-    return Users.find()
-      .then(users => res.json(users.map(user => user.serialize())))
-      .catch(err => res.status(500).json({message: 'Internal server error'}));
-  });
   
 module.exports = {router};

@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const morgan = require("morgan");
 const cors = require('cors');
-// const path=require('path');
 
 const {router: authRouter, localStrategy, jwtStrategy} = require('./routes/auth')
 const {router: usersRouter} = require('./routes/users');
@@ -26,10 +25,8 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 app.use(morgan('dev'));
-//CORS
 
-  
-  //Passport JWT
+
 app.use('/stockpull/', stockPullRouter);
 app.use('/users', usersRouter);
 app.use('/auth/', authRouter);

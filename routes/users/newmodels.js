@@ -3,9 +3,7 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
-// mongoose.Promise = global.Promise;
-//change to only have username and password
-//avoid arrays
+
 const userSchema = mongoose.Schema({
     username: {
         type: String,
