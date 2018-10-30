@@ -1,0 +1,275 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    background: rgb(82, 101, 143);
+    background: radial-gradient(circle, rgba(82, 101, 143, 0.2805322812718838) 79%, rgba(51, 58, 86, 1) 100%);
+}
+
+main {
+    /* max-width: 1000px; */
+    margin: 0 auto;
+}
+
+/* *******************Graph css******************* */
+
+.load, .graph.load, .company-info.load {
+    opacity: 1;
+}
+
+.graph {
+    opacity: 0;
+    transition: opacity 2s ease-in;
+}
+
+.chart-js {
+    padding-right: 7px;
+    margin: 10px 0;
+}
+
+.graph-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px 0;
+}
+
+.time-button {
+    color: rgb(9, 9, 17);
+    font-family: inherit;
+    border: none;
+    background-color: rgba(255, 0, 0, 0);
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+.graph-buttons button:hover {
+    cursor: pointer;
+    background: linear-gradient(70deg, rgba(37, 69, 195, 0.48501407398897056) 12%, rgba(208, 20, 67, 0.6474790599833684) 75%);
+    border-radius: 25px;
+}
+
+.graph-select {
+    color: black;
+    background-color: rgba(158, 83, 83, 0.746);
+    outline: none;
+    border-radius: 50px;
+}
+
+/* **************************nav stuff********************* */
+
+.nav {
+    list-style: none;
+    margin: 0;
+    background: #e8e8e8;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.nav a {
+    text-decoration: none;
+    display: block;
+    padding: 1em;
+    color: black;
+}
+
+.nav a:hover {
+    background: #52658f;
+    color: white
+}
+
+/* ***************************************myportfolio css******************************* */
+
+.title {
+    margin: 3vh 0;
+    text-align: center;
+}
+
+
+.content {
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    grid-auto-flow:row;
+}
+
+.is-grid {
+    display: grid;
+}
+.clickable-cards * {
+    text-align: center;
+}
+.clickable-cards {
+    /* border:2px solid black; */
+    margin-bottom:15px;
+    flex: 0 1 30%;
+    height: 500px;
+    background:#52658f;
+    color:#e8e8e8;
+    padding:10px;
+    justify-items: center;
+    align-items:center;
+    justify-content: space-between;
+    align-content:space-evenly
+
+}
+
+.my-grid {
+    grid-template-areas:
+     '. . img img img img img img img img . .'
+     '. . img img img img img img img img . .' 
+     '. . . . . . . . . . . .'
+     'name name name name name name symbol symbol symbol symbol symbol symbol'
+     'name name name name name name symbol symbol symbol symbol symbol symbol'
+     'des des des des des des des des des des des des'
+     'des des des des des des des des des des des des'
+     'des des des des des des des des des des des des'
+     'des des des des des des des des des des des des'
+     '. . . . . . . . . . . .'
+     'quo quo quo quo quo . . del del del del del'
+     'quo quo quo quo quo . . del del del del del'
+}
+.comp-img {
+    width:45%;
+    height:80px; 
+    /* object-fit:cover; */
+    /* justify-self: center; */
+    mix-blend-mode: multiply;
+
+}
+.stock-symbol {
+    font-size:1.5em
+}
+.stock-name {
+    font-size:1.9em;
+}
+.description{
+    font-size:1.3em;
+}
+.port-button {
+    display:block;
+    margin-top:10px;
+    padding:5px;
+    height:100%;
+    width:100%;
+    font-size:1em;
+    font-weight: bold;
+    border-radius: 25px;
+}
+.port-button:hover {
+    background-color:#8a5035a2
+}
+
+/* Fancy Box */
+
+.lightbox-container {
+    width: 90vw !important;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.stock-quote {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    align-items: center
+}
+
+.results {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+}
+
+.topflex {
+    flex-basis: 50%;
+    flex-flow: row nowrap
+}
+
+.results .symbol {
+    font-size: 3em;
+}
+
+.fancybox-stage {
+    margin: auto;
+}
+
+.fancybox-slide {
+    width: 80%;
+}
+
+.chart-js {
+    background: rgb(51, 58, 86);
+    background: radial-gradient(circle, rgba(51, 58, 86, 0.4149860627844888) 23%, rgba(82, 101, 143, 1) 100%);
+}
+
+.fancybox-content {
+    background: #e8e8e8;
+}
+
+.before-stocks {
+    text-align: center;
+}
+
+@media all and (max-width: 1400px) {
+    .chart-js {
+        background: rgba(82, 101, 143, 0.8)
+    }
+}
+@media all and (max-width: 1400px){
+    .clickable-cards {
+        /* border:2px solid black; */
+        flex: 0 1 45%;
+        height:450px;
+    }
+}
+@media all and (max-width: 900px) {
+    .nav {
+        justify-content: space-around;
+    }
+    .description{
+        font-size: 1em;
+    }
+    .comp-img{
+        width:60%;
+        display:inline-block;
+    }
+    
+}
+
+@media all and (max-width: 600px) {
+    .nav {
+        flex-flow: column wrap;
+        padding: 0;
+    }
+    .nav a {
+        text-align: center;
+        padding: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .nav li:last-of-type a {
+        border-bottom: none;
+    }
+    .clickable-cards {
+        /* border:2px solid black; */
+        flex: 0 1 95%;
+        height:350px;
+    }
+    .comp-img{
+        width:60%;
+        display:inline-block;
+    }
+    .port-button{
+        font-size:.8em;
+    }
+}

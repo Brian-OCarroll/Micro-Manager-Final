@@ -26,22 +26,22 @@
     function displayLists(lists) {
       const htmllist = lists.map(
         list => `
-            <div class="clickable-cards ${list.symbol}"> 
+            <div class="clickable-cards my-grid is-grid ${list.symbol}">
             <div class="ajax-loader" style="display: none;">
-                <p>Loading Quote</p>
-                <img src="../ajax-loader2.gif" alt="loading-gif" class="img-responsive" />
+            <p>Loading Quote</p>
+            <img src="../ajax-loader2.gif" alt="loading-gif" class="img-responsive" />
             </div>
-            <img class="comp-img flexcard" src="${list.image}" alt="${list.symbol} Parent Company">
-            <div class="stock-name flexcard" >
-              <p>${list.name}</p>
-              <p>${list.symbol.toUpperCase()}</p>
-            </div>
-            <p class="description flexcard">${list.description}</p>
-            <div style="position:absolute;bottom:10px">
-            <button data-id="${list.id}" class="delete-list port-button">Delete Stock</button>
-            <button data-symbol="${list.symbol}" style="float:right"class="expand port-button">Get realtime stock quote</button>
-            </div>
-          </div>
+            <img style="grid-area:img; " class="comp-img flexcard" src="${list.image}" alt="${list.symbol} Parent Company">
+        
+            <p class="stock-name "style="grid-area: name; ">${list.name}</p>
+            <p class="stock-symbol"style="grid-area: symbol; ">${list.symbol.toUpperCase()}</p>
+        
+            <p class="description flexcard" style="grid-area: des; ">${list.description}</p>
+        
+            <button data-id="${list.id}" style="grid-area:del" class="delete-list port-button">Delete Stock</button>
+            <button data-symbol="${list.symbol}" style=" grid-area: quo" class="expand port-button">Get realtime stock quote</button>
+        
+        </div>
             `
       );
       
