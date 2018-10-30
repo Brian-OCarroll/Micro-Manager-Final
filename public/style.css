@@ -118,6 +118,7 @@ label {
     width:30%;
     height:50px;
     object-fit:contain;
+    margin-bottom:10px;
 }
 .results .symbol {
     font-size:1.8em;

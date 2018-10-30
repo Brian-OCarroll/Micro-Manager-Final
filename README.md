@@ -14,7 +14,7 @@ a user can either get a realtime quote, rendered in a lightbox, or delete saved 
 
 - [Live App](https://micro-manager.herokuapp.com)
 
-###Demo Login (no caps)
+### Demo Login (no caps)
 
 Username: demo
 Passord: password
