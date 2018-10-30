@@ -17,10 +17,12 @@ a user can either get a realtime quote, rendered in a lightbox, or delete saved 
 ### Demo Login (no caps)
 
 Username: demo
+
 Passord: password
 
 ## Screenshots
 Signup/Login Page:
+
 ![Signup tab](images/signup.png)
 
 ![Login tab](images/login.png)
