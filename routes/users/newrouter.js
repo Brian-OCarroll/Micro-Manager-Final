@@ -97,7 +97,7 @@ function checkPostReq(req,res,next){
 router.post('/', jsonParser, checkPostReq, (req, res) => {
   let {username, password} = req.body;
 
-  // check if conflicts database and create an account if no conflict
+  // check if conflicts database and create an account if no conflicts present
   return Users.find({username})
     .count()
     .then(count => {
@@ -110,8 +110,7 @@ router.post('/', jsonParser, checkPostReq, (req, res) => {
           location: 'username'
         });
       }
-      // If there is no existing user, hash the password using the instance method
-      // in models.js
+      // If there is no existing user, hash the password using the instance method from model
       return Users.hashPassword(password);
     })
     .then(hash => {
