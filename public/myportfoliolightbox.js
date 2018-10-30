@@ -6,14 +6,14 @@ $('#my-lists').on('click', '.expand', function (e) {
     e.stopPropagation();
     e.preventDefault();
     // save form search data to sessionStorage
-    // let symbol = document.getElementsByClassName("clickable-cards")[0].getAttribute("data-symbol"); 
     let symbol = $(this).attr('data-symbol');
+    let load = $(this).siblings('.ajax-loader')
     const options = {
         url: '/stockpull',
         type: 'GET',
         cache: true,
         beforeSend: function(){
-            $('.ajax-loader').show();
+            load.show()
         },
         contentType: "application/json; charset=utf-8",
         data: {
@@ -21,7 +21,6 @@ $('#my-lists').on('click', '.expand', function (e) {
         },
         dataType: 'json'
     };
-    console.log(options)
     $.ajax(options)
         .then(function (data) {
             function fixKeys(obj) {
@@ -167,7 +166,6 @@ $('#my-lists').on('click', '.expand', function (e) {
                         $(".lightbox-container").css({"background": "#e8e8e8","padding":"0", "vertical-align": "middle"});
                     },
                     afterShow: function (instance, current) {
-                        console.log('Check')
                         handleGraph();
                     },
                     afterClose: function (slide) {
@@ -188,7 +186,6 @@ $('#my-lists').on('click', '.expand', function (e) {
             });
         })
         .fail(function (data) {
-            // console.log(data)
             alert('Please wait a minute and then try again!')
         })
 });
@@ -219,19 +216,5 @@ function renderGraph(chart, label, data) {
 
 
 $(handleGraph);
-// $('document').ajaxStop(()=>{
-//     $.fancybox.open({
-//         src:'#lightbox-container',
-//         // type:'block',
-//         // opts:{
-//         //     afterShow:function(instance,current){
-//         //         //console.info('show recipe details in modal!')
-//         //     }
-//         // }
-//     });
-// })
-
-//save to portfolio
-
 
 
