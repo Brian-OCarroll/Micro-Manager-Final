@@ -6,13 +6,29 @@
 html {
   height: 100%;
 }
-
+.bg-image {
+  /* background: #e8e8e8; */
+  background-image: url(background.jpg);
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height:100%;
+  /* z-index:-1 */
+  position:fixed;
+  left: 0;
+  right: 0;
+  top:0;
+  z-index: -1;
+}
 body {
-  background: #e8e8e8;
+  height:100%
 }
 
 .forms {
-  background:#52658f;
+  background:#52658fb4;
+  
   box-shadow: 0 0 3px #000;
   margin: 8% auto;
   max-width: 500px;
