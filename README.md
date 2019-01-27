@@ -17,8 +17,7 @@ a user can either get a realtime quote, rendered in a lightbox, or delete saved 
 ### Demo Login (no caps)
 
 Username: demo
-
-Passord: pass
+Password: pass
 
 ## Screenshots
 Signup/Login Page:
