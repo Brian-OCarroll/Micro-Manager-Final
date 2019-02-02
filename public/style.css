@@ -79,11 +79,13 @@ main{
 /* ***************************************stocksearch css******************************* */
 .ajax-loader {
     visibility: hidden;
+    margin-top:15px;
   }
   
 .form-submit-button {
    display:inline-block;
    height:6.8vh;
+   min-height:30px;
    color:white;
    width:5%;
    background: #52658f;
@@ -94,6 +96,7 @@ main{
 input {
     display:inline-block;
     height:6.5vh;
+    min-height: 30px;
     width:30%;
     font-size:16px;
     margin-right:-.8%;
@@ -113,7 +116,9 @@ label {
 .results {
     text-align:center;
     margin-top:25px;
+    font-size:1.3em;
 }
+
 .results img {
     width:30%;
     height:50px;
