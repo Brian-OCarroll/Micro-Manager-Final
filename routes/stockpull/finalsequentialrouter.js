@@ -50,6 +50,7 @@ function getCompanyFromApi(req, res) {
     }
     request(options)
     .then(function(apiResponse){
+        //get rid of pre tag
         let companyData = apiResponse.replace(new RegExp("<pre>", 'g'), "");
         return companyData
     })

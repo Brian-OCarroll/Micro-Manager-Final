@@ -19,6 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
+//serve public files
 app.use(express.static(path.resolve(__dirname, 'public')))
 mongoose.Promise = global.Promise;
 passport.use(localStrategy);
