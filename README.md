@@ -14,7 +14,7 @@ a user can either get a realtime quote, rendered in a lightbox, or delete saved 
 Endpoints on the server side include:
 ### '/' - index page
 #### GET '/'
-No data required in request. Render the index page with Handlebars template as response.
+No data required in request. Render the index page.
 ### '/users' - user registration
 #### POST '/'
 "username" and "password" are required in request body. Both parameters cannot start or end with white space, and password must be at least 4 characters and at most 72 characters long.
