@@ -45,19 +45,16 @@ function getStocksFromApi(req, res) {
 function getCompanyFromApi(req, res) {
     const options = {
         method: 'GET',
-        url:`https://financialmodelingprep.com/api/company/profile/${req.query.symbol}`,
+        url:`https://financialmodelingprep.com/api/v3/company/profile/${req.query.symbol}`,
         json:true,
     }
     request(options)
-    .then(function(apiResponse){
-        //get rid of pre tag
-        let companyData = apiResponse.replace(new RegExp("<pre>", 'g'), "");
-        return companyData
-    })
     .then(function(data){
-        let parsedSymbolResults = JSON.parse(data);
-        let companyName = parsedSymbolResults[`${req.query.symbol}`]   
-        return companyName;
+        console.log('raw data', data)
+
+        let companyProfile = data.profile;
+
+        return companyProfile;
     })
     .then(function(response){
         res.json(response);

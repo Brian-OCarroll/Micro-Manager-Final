@@ -8,7 +8,7 @@ $('main').on('click', '.form-submit-button', function (e) {
     e.preventDefault();
     // save form search data to localStorage
     let symbol = $('.search-query').val();
-
+    console.log(symbol, symbol.length)
     const options = {
         url: '/stockpull',
         type: 'GET',
@@ -28,13 +28,14 @@ $('main').on('click', '.form-submit-button', function (e) {
         cache: true,
         contentType: "application/json; charset=utf-8",
         data: {
-            symbol: symbol.toLowerCase()
+            symbol: symbol
         },
         dataType: 'json'
     };
     let companyData;
     $.ajax(options2)
         .then(function (data) {
+            console.log(data)
             companyData = data;
         })
         .fail(function (data) {
