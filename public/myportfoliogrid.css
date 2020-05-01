@@ -5,12 +5,43 @@
 }
 
 html {
-    min-height: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 body {
-    background: rgb(82, 101, 143);
-    background: radial-gradient(circle, rgba(82, 101, 143, 0.2805322812718838) 79%, rgba(51, 58, 86, 1) 100%);
+    /* background: rgb(82,101,143);
+    background: radial-gradient(circle, rgba(82,101,143,0.2805322812718838) 79%, rgba(51,58,86,1) 100%); */
+
+    height: 100%;
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    background-color: #8c55e7;
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuMCIgeDI9IjEuMCIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIyMCUiIHN0b3AtY29sb3I9IiNkNmEzZTEiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhN2Q0ZWEiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+    background-size: 100%;
+    background-image: -webkit-gradient(linear, left top, right bottom, color-stop(20%, #21636a), to(#452271));
+    background-image: linear-gradient(to right bottom, #21636a 20%, #452271 100%);
+    overflow: hidden;
+}
+
+body::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -11;
+    opacity: 0.2;
+    mix-blend-mode: overlay;
+    background-image: url("/background2.jpg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
 }
 
 main {
@@ -66,7 +97,7 @@ main {
 .nav {
     list-style: none;
     margin: 0;
-    background: #e8e8e8;
+    background:  #312f2fe3;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -76,7 +107,7 @@ main {
     text-decoration: none;
     display: block;
     padding: 1em;
-    color: black;
+    color: white;
 }
 
 .nav a:hover {
@@ -111,7 +142,7 @@ main {
     margin-bottom:15px;
     flex: 0 1 30%;
     height: 500px;
-    background:#52658f;
+    background:#0c0d1087;
     color:#e8e8e8;
     padding:10px;
     justify-items: center;
@@ -138,8 +169,8 @@ main {
 }
 .comp-img {
     width:45%;
-    height:80px; 
-    mix-blend-mode: multiply;
+    height:auto; 
+    /* mix-blend-mode: multiply; */
 
 }
 .stock-symbol {
@@ -210,7 +241,7 @@ main {
 }
 
 .fancybox-content {
-    background: #e8e8e8;
+    background: #0000003b !important;
 }
 
 .before-stocks {

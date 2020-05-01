@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
     crossorigin="anonymous">
 <link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./graph-btns.css">
+<link rel="stylesheet" href="fancySearchBar.css">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
 
@@ -22,14 +24,28 @@
 
         </nav>
     </header>
+    <div class="background-container"></div>
     <main role="main">
-        <h1 class="tip">Please limit your requests to 2 a minute due to limitations with the Alphavantage API</h1>
+        <h1 class="tip">Search Stock Ticker Here</h1>
+        <!-- <h1 class="tip">Please limit your requests to 2 a minute due to limitations with the Alphavantage API</h1>
         <form action="/stockpull" method="GET" class="stock-search-form">
             <label for="stockSearchBox">Search Stock Symbols Here</label>
-            <input type="text" id="stockSearchBox" class="search-query" placeholder="GOOGL" name='query'>
+            <input type="text" id="stockSearchBox" class="search-bar search-query" placeholder="GOOGL" name='query'>
             <button type="submit" class="form-submit-button"><i class="fa fa-search"></i></button>
-        </form>
-
+        </form> -->
+        <div class="search-box">
+			<div class="search-icon"><i class="fa fa-search search-icon"></i></div>
+			<form action="/stockpull" method="GET" class="search-form">
+				<input type="text" placeholder="Search" id="search" class="search-query" autocomplete="off">
+			</form>
+			<svg class="search-border" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" viewBox="0 0 671 111" style="enable-background:new 0 0 671 111;"
+			 xml:space="preserve">
+          <path class="border" d="M335.5,108.5h-280c-29.3,0-53-23.7-53-53v0c0-29.3,23.7-53,53-53h280"/>
+          <path class="border" d="M335.5,108.5h280c29.3,0,53-23.7,53-53v0c0-29.3-23.7-53-53-53h-280"/>
+        </svg>
+			<div class="go-icon"><i class="fa fa-arrow-right"></i></div>
+        </div>
+        
         <section class="searchSummary">
             <div class="ajax-loader">
                 <img src="../ajax-loader.gif" alt="loading-gif" class="img-responsive" />
@@ -41,11 +57,11 @@
 
         <section class="graph">
             <form class="graph-buttons">
-                <button class="time-button" type="button">1W</button>
-                <button class="time-button" type="button">1M</button>
-                <button class="time-button" type="button">3M</button>
-                <button class="time-button" type="button">1Y</button>
-                <button class="time-button" type="button">5Y</button>
+                <button class="time-button btn btn-red btn-xs btn-3d" type="button">1W</button>
+                <button class="time-button btn btn-red btn-xs btn-3d" type="button">1M</button>
+                <button class="time-button btn btn-red btn-xs btn-3d" type="button">3M</button>
+                <button class="time-button btn btn-red btn-xs btn-3d" type="button">1Y</button>
+                <button class="time-button btn btn-red btn-xs btn-3d" type="button">5Y</button>
             </form>
             <canvas class="chart-js col-12"></canvas>
         </section>

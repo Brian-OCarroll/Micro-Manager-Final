@@ -7,7 +7,7 @@ $('#my-lists').on('click', '.expand', function (e) {
     e.preventDefault();
     // save form search data to sessionStorage
     let symbol = $(this).attr('data-symbol');
-    let load = $(this).siblings('.ajax-loader')
+    let load = $(this).siblings('.ajax-loader');
     const options = {
         url: '/stockpull',
         type: 'GET',
@@ -23,30 +23,9 @@ $('#my-lists').on('click', '.expand', function (e) {
     };
     $.ajax(options)
         .then(function (data) {
-            function fixKeys(obj) {
-                Object.keys(obj).forEach(function (key) {
-                    let newName = key.split('.')[1].trim();
-                    //dynamic form of obj.newKey
-                    obj[newName] = obj[key];
-                    delete obj[key];
-                });
-                return obj;
-            }
-            // adds a key value pair for the date, with the date of the stock quote, 
-            //and then deletes the key 'Time Series (Daily)'
+            console.log(data)
+           let arrayData = data;
 
-            let metaData = data["Meta Data"]
-            let symbolIn = metaData["2. Symbol"]
-
-            //the main object with all dates indexed
-            let fullData = data["Time Series (Daily)"];
-            let arrayData = [];
-            Object.keys(fullData).map(function (key) {
-                let obj = {};
-                obj = fixKeys(fullData[key]);
-                obj['date'] = key;
-                arrayData.push(obj);
-            });
             graphLabels = { '1W': [], '1M': [], '3M': [], '1Y': [], '5Y': [] };
             graphData = { '1W': [], '1M': [], '3M': [], '1Y': [], '5Y': [] };
             for (let i = 0; i < arrayData.length; i++) {
@@ -82,7 +61,7 @@ $('#my-lists').on('click', '.expand', function (e) {
                 arrayHigh.push(parseInt(arrayData[i].high));
                 arrayVol += parseInt(arrayData[i].volume);
             }
-            todayData['symbol'] = symbolIn;
+            todayData['symbol'] = symbol;
             todayData['tlow'] = `${Math.min.apply(null, arrayLow)}`;
             todayData['thigh'] = `${Math.max.apply(null, arrayLow)}`;
             let tvol = arrayVol / arrayData.length;
@@ -131,9 +110,12 @@ $('#my-lists').on('click', '.expand', function (e) {
                             display: false
                         },
                         scales: {
+                            gridLines: {
+                                color: "white"
+                            },
                             yAxes: [{
                                 ticks: {
-                                    fontColor: "black"
+                                    fontColor: "white"
                                 }
                             }],
                             xAxes: [{
@@ -141,7 +123,7 @@ $('#my-lists').on('click', '.expand', function (e) {
                                 distribution: 'series',
                                 bounds: 'data',
                                 ticks: {
-                                    fontColor: "black",
+                                    fontColor: "white",
                                     source: 'data',
                                     display: true //set to false to remove x axis labels
                                 }
@@ -151,7 +133,7 @@ $('#my-lists').on('click', '.expand', function (e) {
                 });
 
             renderGraph(stockChart, graphLabels['1M'], graphData['1M']);
-            $(".time-button:contains('1M')").addClass('graph-select');
+            $(".time-button:contains('1M')").addClass('graph-select active');
             $(".graph").addClass('load');
         })
         .done(() => {
@@ -161,7 +143,7 @@ $('#my-lists').on('click', '.expand', function (e) {
                 type: 'inline',
                 opts: {
                     beforeShow: function() {
-                        $(".lightbox-container").css({"background": "#e8e8e8","padding":"0", "vertical-align": "middle"});
+                        $(".lightbox-container");
                     },
                     afterShow: function (instance, current) {
                         handleGraph();
@@ -193,9 +175,9 @@ $('#my-lists').on('click', '.expand', function (e) {
 
 function handleGraph() {
     $('.time-button').on('click', function (event) {
-        $('.time-button').removeClass('graph-select');
+        $('.time-button').removeClass('graph-select active');
         let timeScale = $(this).text();
-        $(this).addClass('graph-select');
+        $(this).addClass('graph-select active');
 
         renderGraph(stockChart, graphLabels[timeScale], graphData[timeScale]);
     });

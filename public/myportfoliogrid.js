@@ -34,7 +34,7 @@
             <p class="stock-name "style="grid-area: name; ">${list.name}</p>
             <p class="stock-symbol"style="grid-area: symbol; ">${list.symbol.toUpperCase()}</p>
         
-            <p class="description flexcard" style="grid-area: des; ">${list.description}</p>
+            <p class="description flexcard" style="grid-area: des; ">${truncateString(list['description'], 150)}</p>
         
             <button data-id="${list.id}" style="grid-area:del" class="delete-list port-button">Delete Stock</button>
             <button data-symbol="${list.symbol}" style=" grid-area: quo" class="expand port-button">Get realtime stock quote</button>
@@ -71,3 +71,10 @@
       $('#my-lists').html(message)
   }
   })();
+
+  function truncateString(string, cutoffIndex) {
+    if ( string.length <= cutoffIndex ) {
+        return string
+    }
+    return string.slice(0, cutoffIndex) + '...'
+}

@@ -3,12 +3,11 @@ let stockChart;
 let graphLabels;
 let graphData;
 const jwtAuth = localStorage.getItem("token");
-$('main').on('click', '.form-submit-button', function (e) {
+$('main').on('submit', '.search-form', function (e) {
     e.stopPropagation();
     e.preventDefault();
     // save form search data to localStorage
     let symbol = $('.search-query').val();
-    console.log(symbol, symbol.length)
     const options = {
         url: '/stockpull',
         type: 'GET',
@@ -35,7 +34,6 @@ $('main').on('click', '.form-submit-button', function (e) {
     let companyData;
     $.ajax(options2)
         .then(function (data) {
-            console.log(data)
             companyData = data;
         })
         .fail(function (data) {
@@ -44,6 +42,7 @@ $('main').on('click', '.form-submit-button', function (e) {
         })
     $.ajax(options)
         .then(function (data) {
+
             function fixKeys(obj) {
                 Object.keys(obj).forEach(function (key) {
                     let newName = key.split('.')[1].trim();
@@ -52,20 +51,8 @@ $('main').on('click', '.form-submit-button', function (e) {
                 });
                 return obj;
             }
-            //indexes each day starting from 0 adding a key with the index position
+            let arrayData = data
 
-            let metaData = data["Meta Data"]
-            let symbol = metaData["2. Symbol"]
-
-            //the main object with all dates by day
-            let fullData = data["Time Series (Daily)"];
-            let arrayData = [];
-            Object.keys(fullData).map(function (key) {
-                let obj = {};
-                obj = fixKeys(fullData[key]);
-                obj['date'] = key;
-                arrayData.push(obj);
-            });
             graphLabels = { '1W': [], '1M': [], '3M': [], '1Y': [], '5Y': [] };
             graphData = { '1W': [], '1M': [], '3M': [], '1Y': [], '5Y': [] };
             for (let i = 0; i < arrayData.length; i++) {
@@ -158,9 +145,12 @@ $('main').on('click', '.form-submit-button', function (e) {
                             display: false
                         },
                         scales: {
+                            gridLines: {
+                                color: "white"
+                            },
                             yAxes: [{
                                 ticks: {
-                                    fontColor: "blue"
+                                    fontColor: "white"
                                 }
                             }],
                             xAxes: [{
@@ -168,7 +158,7 @@ $('main').on('click', '.form-submit-button', function (e) {
                                 distribution: 'series',
                                 bounds: 'data',
                                 ticks: {
-                                    fontColor: "blue",
+                                    fontColor: "white",
                                     source: 'data',
                                     display: true //set to false to remove x axis labels
                                 }
@@ -178,7 +168,7 @@ $('main').on('click', '.form-submit-button', function (e) {
                 });
 
             renderGraph(stockChart, graphLabels['1M'], graphData['1M']);
-            $(".time-button:contains('1M')").addClass('graph-select');
+            $(".time-button:contains('1M')").addClass('graph-select active');
             $(".graph").addClass('load');
         })
         .fail(function (data) {
@@ -191,9 +181,9 @@ $('main').on('click', '.form-submit-button', function (e) {
 
 function handleGraph() {
     $('.time-button').on('click', function (event) {
-        $('.time-button').removeClass('graph-select');
+        $('.time-button').removeClass('graph-select active');
         let timeScale = $(this).text();
-        $(this).addClass('graph-select');
+        $(this).addClass('graph-select active');
 
         renderGraph(stockChart, graphLabels[timeScale], graphData[timeScale]);
     });
@@ -254,3 +244,31 @@ $('.searchSummary').on('click', '.save-portfolio-button', function (e) {
         })
 });
 
+$(document).ready(function(){
+    $("#search").focus(function() {
+      $(".search-box").addClass("border-searching");
+      $(".search-icon").addClass("si-rotate");
+    });
+    $("#search").blur(function() {
+      $(".search-box").removeClass("border-searching");
+      $(".search-icon").removeClass("si-rotate");
+    });
+    $("#search").keyup(function() {
+        if($(this).val().length > 0) {
+          $(".go-icon").addClass("go-in");
+        }
+        else {
+          $(".go-icon").removeClass("go-in");
+        }
+    });
+    $(".go-icon").click(function(){
+      $(".search-form").submit();
+    });
+});
+
+function truncateString(string, cutoffIndex) {
+    if ( string.length <= cutoffIndex ) {
+        return string
+    }
+    string.slice(0, cutoffIndex) + '...'
+}
