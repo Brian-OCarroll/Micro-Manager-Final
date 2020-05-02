@@ -50,7 +50,7 @@ Request body supplies a stock id to delete.
 
 ## Live App 
 
-- [Live App](https://micro-manager.herokuapp.com)
+- [Live App](https://micro-manager.brianocarroll.dev)
 
 ### Demo Login (no caps)
 
